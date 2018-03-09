@@ -4,7 +4,7 @@ import requests
 import json
 import os
 
-US_BASE_URL="localhost:9000"
+US_BASE_URL="www.defenseorchestrator.com"
 EU_BASE_URL="www.defenseorchestrator.eu"
 
 GET_DEVICES_URL="http://{0}/aegis/rest/v1/services/targets/devices"
