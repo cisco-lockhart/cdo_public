@@ -1,5 +1,4 @@
-# To run
+# CDO public repository
 
-• pip install virtualenv
-* virtualenv venv
-* pip install -r requirements.txt
+This repository includes goodies from the CDO team, such as:
+* API samples: look in the `api_samples` directory.

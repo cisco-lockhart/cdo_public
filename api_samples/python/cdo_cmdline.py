@@ -5,7 +5,7 @@ import asa_configs
 parser = argparse.ArgumentParser()
 
 parser.add_argument("-a", "--api-token", help="The API token to use")
-parser.add_argument("-e", "--env", help="The environment to use", choices=['eu', 'us'], default='us')
+parser.add_argument("-e", "--env", help="The environment to use", choices=['eu', 'us', 'localhost'], default='us')
 parser.add_argument("-o", "--output-dir", help="The output directory", default='/tmp/asa_configs')
 
 # Add optional arguments to download ASA configs
