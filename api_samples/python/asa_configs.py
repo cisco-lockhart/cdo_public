@@ -21,6 +21,7 @@ def download_asa_configs(api_token, env, output_dir):
         params = {
             'q': '(deviceType:ASA)',
             'resolve': '[targets/devices.{name,deviceConfig}]',
+            'sort': 'name:desc',
             'limit': NUM_DEVICES_TO_RETRIEVE_PER_QUERY,
             'offset': i
         }
