@@ -1,4 +1,4 @@
-# CDO API Samples
+# CDO public repository
 
-This project contains examples of how you can leverage the CDO API to automate 
-common tasks around managing and analysing policies across your firewalls.
+This repository includes goodies from the CDO team, such as:
+* API samples: look in the `api_samples` directory.
