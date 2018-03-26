@@ -14,6 +14,7 @@ def download_asa_configs(api_token, env, output_dir):
 
     print "Downloading configurations for " + str(num_devices) + " ASAs in env " + env
 
+    filenames = []
     for i in range(0, num_devices, NUM_DEVICES_TO_RETRIEVE_PER_QUERY):
         params = {
             'q': '(deviceType:ASA)',
@@ -36,6 +37,9 @@ def download_asa_configs(api_token, env, output_dir):
             config_file.write(device_json['deviceConfig'])
             config_file.close()
             print "Downloaded config for device " + device_json['name']
+            filenames.append(config_file.name)
+
+    return filenames
 
 
 def _get_device_count(env, api_token):
