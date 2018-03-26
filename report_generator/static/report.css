@@ -1,0 +1,10 @@
+html, body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'CiscoSans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
