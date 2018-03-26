@@ -34,7 +34,8 @@ def download_asa_configs(api_token, env, output_dir):
         devices_json = json.loads(response.text)
         for device_json in devices_json:
             config_file = open(os.path.join(output_dir, device_json['name'] + '.config.txt'), "w")
-            config_file.write(device_json['deviceConfig'])
+            if device_json['deviceConfig'] is not None:
+                config_file.write(device_json['deviceConfig'])
             config_file.close()
             print "Downloaded config for device " + device_json['name']
             filenames.append(config_file.name)
