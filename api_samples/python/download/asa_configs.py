@@ -4,7 +4,7 @@ import requests
 import json
 import os
 
-US_BASE_URL = "https://www.defensorchestrator.com"
+US_BASE_URL = "https://www.defenseorchestrator.com"
 EU_BASE_URL = "https://www.defenseorchestrator.eu"
 LOCALHOST_BASE_URL = "http://localhost:9000"
 
