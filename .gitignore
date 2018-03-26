@@ -3,3 +3,7 @@
 .idea
 venv
 **/*.iml
+.DS_Store
+
+report_generator/node_modules
+report_generator/report.html
