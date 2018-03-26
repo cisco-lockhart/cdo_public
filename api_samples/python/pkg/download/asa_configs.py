@@ -3,10 +3,7 @@
 import requests
 import json
 import os
-
-US_BASE_URL = "https://www.defenseorchestrator.com"
-EU_BASE_URL = "https://www.defenseorchestrator.eu"
-LOCALHOST_BASE_URL = "http://localhost:9000"
+from .. import envutils
 
 GET_DEVICES_URL = "{0}/aegis/rest/v1/services/targets/devices"
 
@@ -61,13 +58,4 @@ def _get_headers(api_token):
 
 
 def _get_devices_url(env):
-    return GET_DEVICES_URL.format(_get_base_url(env))
-
-
-def _get_base_url(env):
-    if env == 'us':
-        return US_BASE_URL
-    elif env == 'eu':
-        return EU_BASE_URL
-    else:
-        return LOCALHOST_BASE_URL
+    return GET_DEVICES_URL.format(envutils.get_base_url(env))
