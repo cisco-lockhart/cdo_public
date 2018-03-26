@@ -1,1 +1,1 @@
-import asa_configs
+from asa_configs import *
