@@ -3,7 +3,11 @@
 import requests
 import json
 import os
+import sys
+from ..utils import *
+
 from .. import envutils
+from sty import fg, ef, rs
 
 GET_DEVICES_URL = "{0}/aegis/rest/v1/services/targets/devices"
 
@@ -12,9 +16,11 @@ NUM_DEVICES_TO_RETRIEVE_PER_QUERY = 50
 def download_asa_configs(api_token, env, output_dir):
     num_devices = _get_device_count(env, api_token)
 
-    print "Downloading configurations for " + str(num_devices) + " ASAs in env " + env
+    download_msg = as_in_progress_msg('Downloading configurations for ' + str(num_devices) + ' ASAs from CDO environment: ' + env + '...')
+    print(download_msg, end='\r')
 
     filenames = []
+    animation = '|/-\\'
     for i in range(0, num_devices, NUM_DEVICES_TO_RETRIEVE_PER_QUERY):
         params = {
             'q': '(deviceType:ASA)',
@@ -37,9 +43,12 @@ def download_asa_configs(api_token, env, output_dir):
             if device_json['deviceConfig'] is not None:
                 config_file.write(device_json['deviceConfig'])
             config_file.close()
-            print "Downloaded config for device " + device_json['name']
             filenames.append(config_file.name)
 
+
+            print(display_in_progress_animation(download_msg, i), end='\r')
+
+    print(as_done_msg(download_msg))
     return filenames
 
 
