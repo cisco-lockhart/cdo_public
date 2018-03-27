@@ -5,6 +5,7 @@ var exec = require('child_process').exec;
 const jsonDir = process.argv[2];
 const TEMPLATE_PATH = `${__dirname}/template.pug`;
 const STYLESHEET = fs.readFileSync(`${__dirname}/static/report.css`, 'utf8');
+const ANGULAR = fs.readFileSync(`${__dirname}/static/angular.min.js`, 'utf8');
 
 // import json files from a path passed into the script
 if(!jsonDir) {
@@ -74,7 +75,11 @@ function countSeveritiesInParsedJson(obj, severityLevel) {
 }
 
 function compileHtml(bindings) {
-  return pug.compileFile(TEMPLATE_PATH)(_.merge({}, bindings, {stylesheet: STYLESHEET}));
+  return pug.compileFile(TEMPLATE_PATH)(_.merge({}, bindings, {
+    stylesheet: STYLESHEET,
+    preScript: `var bindings = ${JSON.stringify(bindings)}`,
+    angular: ANGULAR
+  }));
 }
 
 /////////////////////////////////////////////////////////////////

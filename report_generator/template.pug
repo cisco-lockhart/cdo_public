@@ -1,6 +1,11 @@
 html
     head
-        style=stylesheet
+        style
+            #{stylesheet}
+        script
+            #{preScript}
+        script
+            #{angular}
     body
         each result in results
             div.config-summary
