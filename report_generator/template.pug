@@ -2,5 +2,11 @@ html
     head
         link(rel='stylesheet' href='static/report.css')
     body
-        each item in agg
-            p #{item.type}: #{item.count}
+        each result in results
+            h3=result.path
+            each item in result.agg
+                p #{item.type}: #{item.count}
+
+        p INFO issues: #{statistics.issueCounts.info}
+        p NOTICE issues: #{statistics.issueCounts.notice}
+        p WARNING issues: #{statistics.issueCounts.warning}

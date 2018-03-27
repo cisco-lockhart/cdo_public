@@ -1,20 +1,27 @@
 const pug = require('pug');
 const _ = require('lodash');
 const fs = require('fs');
-const sampleData = require('./example_response.json');
 const jsonDir = process.argv[2];
-const TEMPLATE_PATH = 'template.pug';
+const TEMPLATE_PATH = `${__dirname}/template.pug`;
+const compileHtml = pug.compileFile(TEMPLATE_PATH);
 
 // import json files from a path passed into the script
 if(!jsonDir) {
   console.error('ERROR: JSON file directory must be specified as the first parameter');
   process.exit(1);
 }
-const jsonFiles = _.filter(fs.readdirSync(jsonDir), (filename) => {
-  return _.endsWith(filename, '.json');
-});
-console.log(jsonFiles);
-const filesToParse = sampleData;
+const jsonFiles = _(fs.readdirSync(jsonDir))
+  .filter((filename) => {
+    return _.endsWith(filename, '.json');
+  })
+  .map((filename) => {
+    return `${jsonDir}/${filename}`;
+  })
+  .map((path) => {
+    return _.merge({}, require(path), {path: path});
+  })
+  .value();
+const filesToParse = jsonFiles;
 
 const KNOWN_TYPES = ['ok', 'issue'];
 const SEVERITY = {
@@ -29,38 +36,61 @@ const SEVERITY = {
 // severity (string)
 // - The generated HTML in BDB omits "ok" severity and only shows "info", "warning", and "notice"
 
-const alertsList = _(_.get(filesToParse, 'data.variables.json_output', []))
-  .filter((alert) => {
-    return _.includes(KNOWN_TYPES, alert.result_type);
-  })
-  .map((alert) => {
-    return {
-      severity: SEVERITY[alert.severity],
-      type: alert.result_type,
-      title: alert.title,
-      text: alert.text
-    }
-  })
-  .value();
-const resultTypeAgg = _.reduce(alertsList, (result, alert) => {
-  result[alert.type] ? result[alert.type] += 1 : result[alert.type] = 1;
-  return result;
-}, {});
+function parseSingleJson(obj) {
+  const alertsList = _(_.get(obj, 'data.variables.json_output', []))
+    .filter((alert) => {
+      return _.includes(KNOWN_TYPES, alert.result_type);
+    })
+    .map((alert) => {
+      return {
+        severity: SEVERITY[alert.severity],
+        type: alert.result_type,
+        title: alert.title,
+        text: alert.text
+      }
+    })
+    .value();
+  const resultTypeAgg = _.reduce(alertsList, (result, alert) => {
+    result[alert.type] ? result[alert.type] += 1 : result[alert.type] = 1;
+    return result;
+  }, {});
 
-const issueList = _.filter(alertsList, (alert) => {
-  return alert.severity >= SEVERITY.info;
-});
+  const issueList = _.filter(alertsList, (alert) => {
+    return alert.severity >= SEVERITY.info;
+  });
 
-console.log(JSON.stringify(resultTypeAgg, null, 2));
-console.log(JSON.stringify(issueList, null, 2));
+  return {
+    resultTypeAgg,
+    issueList,
+    path: obj.path
+  }
+}
 
-const compileHtml = pug.compileFile(TEMPLATE_PATH);
+function countSeveritiesInParsedJson(obj, severityLevel) {
+  return _.filter(obj.issueList, (result) => {
+    return result.severity === severityLevel;
+  }).length;
+}
+
+const results = _.map(filesToParse, parseSingleJson);
+
 fs.writeFile('report.html', compileHtml({
-  agg: _.map(resultTypeAgg, (value, key) => {
+  results: _.map(results, (result) => {
     return {
-      type: key,
-      count: value
-    }
+      path: result.path,
+      agg: _.map(result.resultTypeAgg, (value, key) => {
+        return {
+          type: key,
+          count: value
+        }
+      })
+    };
   }),
-
+  statistics: {
+    issueCounts: {
+      info: _.sum(_.map(results, (result) => {return countSeveritiesInParsedJson(result, SEVERITY.info)})),
+      notice: _.sum(_.map(results, (result) => {return countSeveritiesInParsedJson(result, SEVERITY.notice)})),
+      warning: _.sum(_.map(results, (result) => {return countSeveritiesInParsedJson(result, SEVERITY.warning)}))
+    }
+  }
 }));
