@@ -1,6 +1,7 @@
 const pug = require('pug');
 const _ = require('lodash');
 const fs = require('fs');
+var exec = require('child_process').exec;
 const jsonDir = process.argv[2];
 const TEMPLATE_PATH = `${__dirname}/template.pug`;
 const STYLESHEET = fs.readFileSync(`${__dirname}/static/report.css`, 'utf8');
@@ -72,11 +73,15 @@ function countSeveritiesInParsedJson(obj, severityLevel) {
   }).length;
 }
 
-const results = _.map(filesToParse, parseSingleJson);
-
 function compileHtml(bindings) {
   return pug.compileFile(TEMPLATE_PATH)(_.merge({}, bindings, {stylesheet: STYLESHEET}));
 }
+
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+
+const results = _.map(filesToParse, parseSingleJson);
 
 fs.writeFileSync('report.html', compileHtml({
   results: _.map(results, (result) => {
@@ -98,3 +103,5 @@ fs.writeFileSync('report.html', compileHtml({
     }
   }
 }));
+
+exec('open ./report.html');

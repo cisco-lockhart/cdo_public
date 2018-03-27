@@ -1,10 +1,61 @@
+@font-face {
+  font-family: CiscoSans;
+  src: url('https://s3-us-west-2.amazonaws.com/cdo-prod-fonts/CiscoSansTTRegular.eot');
+  src: url('https://s3-us-west-2.amazonaws.com/cdo-prod-fonts/CiscoSansTTRegular.woff') format('woff'), url('https://s3-us-west-2.amazonaws.com/cdo-prod-fonts/CiscoSansTTRegular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  unicode-range: U+000-5FF; }
+@font-face {
+  font-family: CiscoSans;
+  src: url('https://s3-us-west-2.amazonaws.com/cdo-prod-fonts/CiscoSansTTThin.eot');
+  src: url('https://s3-us-west-2.amazonaws.com/cdo-prod-fonts/CiscoSansTTThin.woff') format('woff'), url('https://s3-us-west-2.amazonaws.com/cdo-prod-fonts/CiscoSansTTThin.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 200;
+  unicode-range: U+000-5FF; }
+@font-face {
+  font-family: CiscoSans;
+  src: url('https://s3-us-west-2.amazonaws.com/cdo-prod-fonts/CiscoSansTTBold.eot');
+  src: url('https://s3-us-west-2.amazonaws.com/cdo-prod-fonts/CiscoSansTTBold.woff') format('woff'), url('https://s3-us-west-2.amazonaws.com/cdo-prod-fonts/CiscoSansTTBold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 600;
+  unicode-range: U+000-5FF; }
+
 html, body {
   padding: 0;
   margin: 0;
 }
 
+/*
+$cisco-ciscoblue: #049fd9;
+$cisco-indigoblue: #005073;
+$cisco-green: #6ebe4a; // normal/available status
+// Accent palette
+$cisco-orange: #fbab18;
+$cisco-red: #e2231a;
+// others
+$cisco-dkgray1: #39393b;
+$cisco-dkgray2: #58585b;
+$cisco-medgray2: #9e9ea2;
+$cisco-palegray1: #e8ebf1;
+$cisco-statusred: #cf2030; // critical alerts
+$cisco-statusorange: #ff7300; // major alerts
+$cisco-statusyellow: #ffcc00; // minor alerts
+$cisco-statusgreen: #6cc04a; // normal/available status
+$cisco-statusblue: $cisco-ciscoblue; // info alerts
+$cisco-statusunknown: $cisco-medgray2; // unknown status
+ */
 body {
   font-family: 'CiscoSans', sans-serif;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #e8ebf1;
+}
+
+.config-summary {
+  margin: 12px;
+  box-shadow: 0 2px 3px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  padding: 12px;
+  background-color: white;
 }

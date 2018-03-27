@@ -3,9 +3,10 @@ html
         style=stylesheet
     body
         each result in results
-            h3=result.path
-            each item in result.agg
-                p #{item.type}: #{item.count}
+            div.config-summary
+                h3=result.path
+                each item in result.agg
+                    p #{item.type}: #{item.count}
 
         p INFO issues: #{statistics.issueCounts.info}
         p NOTICE issues: #{statistics.issueCounts.notice}
