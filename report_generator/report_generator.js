@@ -3,7 +3,7 @@ const _ = require('lodash');
 const fs = require('fs');
 const jsonDir = process.argv[2];
 const TEMPLATE_PATH = `${__dirname}/template.pug`;
-const compileHtml = pug.compileFile(TEMPLATE_PATH);
+const STYLESHEET = fs.readFileSync(`${__dirname}/static/report.css`, 'utf8');
 
 // import json files from a path passed into the script
 if(!jsonDir) {
@@ -74,7 +74,11 @@ function countSeveritiesInParsedJson(obj, severityLevel) {
 
 const results = _.map(filesToParse, parseSingleJson);
 
-fs.writeFile('report.html', compileHtml({
+function compileHtml(bindings) {
+  return pug.compileFile(TEMPLATE_PATH)(_.merge({}, bindings, {stylesheet: STYLESHEET}));
+}
+
+fs.writeFileSync('report.html', compileHtml({
   results: _.map(results, (result) => {
     return {
       path: result.path,
