@@ -1,18 +1,7 @@
 html
     head
-        style
-            #{stylesheet}
-        script
-            #{preScript}
-        script
-            #{angular}
-    body
-        each result in results
-            div.config-summary
-                h3=result.path
-                each item in result.agg
-                    p #{item.type}: #{item.count}
-
-        p INFO issues: #{statistics.issueCounts.info}
-        p NOTICE issues: #{statistics.issueCounts.notice}
-        p WARNING issues: #{statistics.issueCounts.warning}
+        style(type="text/css") !{stylesheet}
+    body !{angularTemplate}
+        script !{preScript}
+        script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js")
+        script !{postScript}

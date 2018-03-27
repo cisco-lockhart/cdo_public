@@ -6,7 +6,6 @@
   "private": true,
   "dependencies": {
     "lodash": "^4.17.5",
-    "pug": "^2.0.3",
-    "yargs": "^11.0.0"
+    "pug": "^2.0.3"
   }
 }
