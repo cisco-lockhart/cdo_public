@@ -5,7 +5,10 @@ var exec = require('child_process').exec;
 const jsonDir = process.argv[2];
 const TEMPLATE_PATH = `${__dirname}/template.pug`;
 const STYLESHEET = fs.readFileSync(`${__dirname}/static/report.css`, 'utf8');
+const CDO_STYLESHEET = fs.readFileSync(`${__dirname}/static/cdo-styles.css`, 'utf8');
 const ANGULAR = fs.readFileSync(`${__dirname}/static/angular.min.js`, 'utf8');
+const ANGULAR_TEMPLATE = fs.readFileSync(`${__dirname}/static/app.html`, 'utf8');
+const APP_SCRIPT = fs.readFileSync(`${__dirname}/static/app.js`, 'utf8');
 
 // import json files from a path passed into the script
 if(!jsonDir) {
@@ -77,8 +80,10 @@ function countSeveritiesInParsedJson(obj, severityLevel) {
 function compileHtml(bindings) {
   return pug.compileFile(TEMPLATE_PATH)(_.merge({}, bindings, {
     stylesheet: STYLESHEET,
-    preScript: `var bindings = ${JSON.stringify(bindings)}`,
-    angular: ANGULAR
+    preScript: `var bindings = ${JSON.stringify(bindings)};`,
+    angular: ANGULAR,
+    angularTemplate: ANGULAR_TEMPLATE,
+    postScript: APP_SCRIPT
   }));
 }
 

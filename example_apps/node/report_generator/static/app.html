@@ -1,0 +1,8 @@
+<div id="main" ng-app="app" ng-controller="MainController">
+  <div ng-repeat="result in bindings.results" class="card">
+    <div>{{result.path}}</div>
+    <div ng-repeat="aggItem in result.agg">
+      {{aggItem.type}}: {{aggItem.count}}
+    </div>
+  </div>
+</div>
