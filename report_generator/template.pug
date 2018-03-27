@@ -1,6 +1,13 @@
 html
     head
-
+        style=stylesheet
     body
-        each item in agg
-            p #{item.type}: #{item.count}
+        each result in results
+            div.config-summary
+                h3=result.path
+                each item in result.agg
+                    p #{item.type}: #{item.count}
+
+        p INFO issues: #{statistics.issueCounts.info}
+        p NOTICE issues: #{statistics.issueCounts.notice}
+        p WARNING issues: #{statistics.issueCounts.warning}
