@@ -30,6 +30,7 @@ def analyse_configs(api_token, env, output_dir, bdb_username):
     for filename in filenames:
         _analyse_config(filename, report_json_dir, cookies, api_token, env,
                         device_uids[i], device_names[i], report_uid)
+        i += 1
 
     _generate_reports(report_json_dir)
     _create_note(api_token, env, report_uid, BDB_SCRIPT, device_uids)
