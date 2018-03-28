@@ -5,7 +5,8 @@ EU_BASE_URL = "https://www.defenseorchestrator.eu"
 LOCALHOST_BASE_URL = "http://localhost:9000"
 
 DEVICES_URL = "{0}/aegis/rest/v1/services/targets/devices"
-
+OBJECT_CSV_URL = "{0}/aegis/rest/v1/services/targets/objectcsvs"
+OBJECTS_URL = "{0}/aegis/rest/v1/services/targets/objects"
 ANALYSIS_RESULTS_URL = "{0}/aegis/rest/v1/services/analysis/results"
 NOTES_URL = "{0}/aegis/rest/v1/services/common/notes"
 
@@ -29,6 +30,14 @@ def get_analysis_results_url(env):
 
 def get_notes_url(env):
     return NOTES_URL.format(get_base_url(env))
+
+
+def get_object_csv_url(env):
+    return OBJECT_CSV_URL.format(get_base_url(env))
+
+
+def get_objects_url(env):
+    return OBJECTS_URL.format(get_base_url(env))
 
 
 def get_headers(api_token):
