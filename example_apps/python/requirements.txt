@@ -1,2 +1,3 @@
 requests
+sty
 argparse
