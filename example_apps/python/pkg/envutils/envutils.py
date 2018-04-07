@@ -4,6 +4,8 @@ STAGING_BASE_URL = "https://staging.dev.lockhart.io"
 EU_BASE_URL = "https://www.defenseorchestrator.eu"
 LOCALHOST_BASE_URL = "http://localhost:9000"
 
+PROXIES_URL="{0}/aegis/rest/v1/services/targets/proxies"
+SPECIFIC_DEVICE_URL="{0}/aegis/rest/v1/device/{1}/specific-device"
 DEVICES_URL = "{0}/aegis/rest/v1/services/targets/devices"
 OBJECT_CSV_URL = "{0}/aegis/rest/v1/services/targets/objectcsvs"
 OBJECTS_URL = "{0}/aegis/rest/v1/services/targets/objects"
@@ -19,6 +21,12 @@ def get_base_url(env):
         return EU_BASE_URL
     else:
         return LOCALHOST_BASE_URL
+
+def get_proxies_url(env):
+    return PROXIES_URL.format(get_base_url(env))
+
+def get_specific_device_url(env, uid):
+    return SPECIFIC_DEVICE_URL.format(get_base_url(env), uid)
 
 
 def get_devices_url(env):
