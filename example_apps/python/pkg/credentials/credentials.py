@@ -11,6 +11,8 @@ from ..utils import as_in_progress_msg, as_done_msg, as_error_msg
 def update_credentials(api_token, env, username, query):
     password = getpass.getpass(prompt='Enter new password: ')
     print(as_in_progress_msg('Finding ASA devices by query...'), end='')
+    print ('', end='\r')
+    print(as_in_progress_msg('Finding ASA devices by query...'), end='')
     asa_uids = _get_asas_by_query(api_token, env, query)
     print(as_done_msg(str(len(asa_uids)) + ' found'))
 
