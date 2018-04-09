@@ -6,6 +6,9 @@ LOCALHOST_BASE_URL = "http://localhost:9000"
 
 PROXIES_URL="{0}/aegis/rest/v1/services/targets/proxies"
 SPECIFIC_DEVICE_URL="{0}/aegis/rest/v1/device/{1}/specific-device"
+ASAS_URL="{0}/aegis/rest/v1/services/asa/configs"
+ASA_URL=ASAS_URL + '/{1}'
+JOBS_URL="{0}/aegis/rest/v1/services/state-machines/jobs"
 DEVICES_URL = "{0}/aegis/rest/v1/services/targets/devices"
 OBJECT_CSV_URL = "{0}/aegis/rest/v1/services/targets/objectcsvs"
 OBJECTS_URL = "{0}/aegis/rest/v1/services/targets/objects"
@@ -28,6 +31,11 @@ def get_proxies_url(env):
 def get_specific_device_url(env, uid):
     return SPECIFIC_DEVICE_URL.format(get_base_url(env), uid)
 
+def get_asa_url(env, asa_uid):
+    return ASA_URL.format(get_base_url(env), asa_uid)
+
+def get_jobs_url(env):
+    return JOBS_URL.format(get_base_url(env))
 
 def get_devices_url(env):
     return DEVICES_URL.format(get_base_url(env))

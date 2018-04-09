@@ -1,3 +1,4 @@
 requests
 sty
 argparse
+cryptography
