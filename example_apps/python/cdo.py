@@ -5,6 +5,8 @@ from pkg.download import asa_configs
 from pkg.analyse import analyser
 from pkg.importers import objectimporter
 
+from pkg.credentials import credentials
+
 parser = argparse.ArgumentParser(description='CDO command line')
 parser.add_argument("-a", "--api-token", help="The API token to use")
 parser.add_argument("-e", "--env", help="The environment to use", choices=['eu', 'us', 'localhost', 'staging'], default='us')
@@ -21,6 +23,11 @@ analyser_parser.add_argument("-u", "--username", help="The username to authentic
 
 import_parser = subparsers.add_parser('import')
 import_parser.add_argument("-i", "--input-file", help="The input file")
+
+update_credentials_parser = subparsers.add_parser('update-credentials', help='Update ASA credentials')
+update_credentials_parser .add_argument("-u", "--username", help="The username to authenticate to BDB")
+update_credentials_parser .add_argument("-q", "--query", help='The query to find the devices to update credentials for. E.g.: tags.labels:ctx will find all ASA devices with the label CTX')
+
 args = parser.parse_args()
 
 
@@ -29,6 +36,8 @@ if args.command == 'download':
 elif args.command == 'analyse':
     analyser.analyse_configs(api_token=args.api_token, env=args.env, output_dir=args.output_dir, bdb_username=args.username)
 elif args.command == 'import':
-    objectimporter.import_objects(api_token=args.api_token,env=args.env,csv_file_name=args.input_file)
+    objectimporter.import_objects(api_token=args.api_token, env=args.env,csv_file_name=args.input_file)
+elif args.command == 'update-credentials':
+    credentials.update_credentials(api_token=args.api_token, env=args.env, username=args.username, query=args.query)
 else:
    sys.stderr('Unrecognised command')
