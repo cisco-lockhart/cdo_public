@@ -15,7 +15,7 @@ from ..crypto import *
 def update_credentials(api_token, env, username, query):
     password = getpass.getpass(prompt='Enter new password: ')
     print(as_in_progress_msg('Finding ASA devices by query...'), end='')
-    print ('', end='\r')
+    print('', end='\r')
     print(as_in_progress_msg('Finding ASA devices by query...'), end='')
     device_uids = _get_asas_by_query(api_token, env, query)
     print(as_done_msg(str(len(device_uids)) + ' found'))
@@ -35,6 +35,7 @@ def update_credentials(api_token, env, username, query):
         _trigger_bulk_update_credentials(api_token, env, device_uids, encrypted_username, encrypted_password,
                                          public_key['keyId'])
 
+
 def _get_asas_by_query(api_token, env, query):
     params = {
         'q': '(deviceType:ASA) AND (' + query + ')',
@@ -48,6 +49,7 @@ def _get_asas_by_query(api_token, env, query):
         device_uids.append(device_details['uid'])
 
     return device_uids
+
 
 def _get_sdc_public_key(api_token, env):
     params = {
@@ -66,14 +68,8 @@ def _get_sdc_public_key(api_token, env):
 
     return response_json[0]['larPublicKey']
 
-def _get_specific_device(api_token, env, device_uid):
-    envutils.get_specific_device_url(env, device_uid)
-    response = requests.get(url=envutils.get_specific_device_url(env, device_uid),
-                            headers=envutils.get_headers(api_token))
 
-    return json.loads(response.text)
-
-def _trigger_bulk_update_credentials(api_token, env, device_uids, encrypted_username, encrypted_password, keyId):
+def _trigger_bulk_update_credentials(api_token, env, device_uids, encrypted_username, encrypted_password, key_id):
     print(as_in_progress_msg('Updating credentials on ' + str(len(device_uids)) + ' devices...'), end='')
     print('', end='\r')
     print(as_in_progress_msg('Updating credentials on ' + str(len(device_uids)) + ' devices...'), end='')
@@ -88,7 +84,7 @@ def _trigger_bulk_update_credentials(api_token, env, device_uids, encrypted_user
         'credentials': json.dumps({
             'username': encrypted_username,
             'password': encrypted_password,
-            'keyId': keyId
+            'keyId': key_id
         })
     }
 
@@ -123,4 +119,3 @@ def _trigger_bulk_update_credentials(api_token, env, device_uids, encrypted_user
         print(as_error_msg('failed to update credentials on some devices'))
     else:
         print(as_done_msg(''))
-
