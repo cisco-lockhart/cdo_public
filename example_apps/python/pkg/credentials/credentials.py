@@ -17,10 +17,10 @@ def update_credentials(api_token, env, username, query):
     print(as_in_progress_msg('Finding ASA devices by query...'), end='')
     print ('', end='\r')
     print(as_in_progress_msg('Finding ASA devices by query...'), end='')
-    asa_uids = _get_asas_by_query(api_token, env, query)
-    print(as_done_msg(str(len(asa_uids)) + ' found'))
+    device_uids = _get_asas_by_query(api_token, env, query)
+    print(as_done_msg(str(len(device_uids)) + ' found'))
 
-    if len(asa_uids) > 0:
+    if len(device_uids) > 0:
         print(as_in_progress_msg('Retrieving SDC public key...'), end='')
         try:
             public_key = _get_sdc_public_key(api_token, env)
@@ -32,7 +32,7 @@ def update_credentials(api_token, env, username, query):
         encrypted_username = crypto.encrypt(public_key['encodedKey'], username)
         encrypted_password = crypto.encrypt(public_key['encodedKey'], password)
 
-        _trigger_bulk_update_credentials(api_token, env, asa_uids, encrypted_username, encrypted_password,
+        _trigger_bulk_update_credentials(api_token, env, device_uids, encrypted_username, encrypted_password,
                                          public_key['keyId'])
 
 def _get_asas_by_query(api_token, env, query):
@@ -43,12 +43,11 @@ def _get_asas_by_query(api_token, env, query):
     response = requests.get(url=envutils.get_devices_url(env),
                             headers=envutils.get_headers(api_token),
                             params=params)
-    asa_uids = []
+    device_uids = []
     for device_details in json.loads(response.text):
-        asa_details = _get_specific_device(api_token, env, device_details['uid'])
-        asa_uids.append(asa_details['uid'])
+        device_uids.append(device_details['uid'])
 
-    return asa_uids
+    return device_uids
 
 def _get_sdc_public_key(api_token, env):
     params = {
@@ -74,16 +73,16 @@ def _get_specific_device(api_token, env, device_uid):
 
     return json.loads(response.text)
 
-def _trigger_bulk_update_credentials(api_token, env, asa_uids, encrypted_username, encrypted_password, keyId):
-    print(as_in_progress_msg('Updating credentials on ' + str(len(asa_uids)) + ' devices...'), end='')
+def _trigger_bulk_update_credentials(api_token, env, device_uids, encrypted_username, encrypted_password, keyId):
+    print(as_in_progress_msg('Updating credentials on ' + str(len(device_uids)) + ' devices...'), end='')
     print('', end='\r')
-    print(as_in_progress_msg('Updating credentials on ' + str(len(asa_uids)) + ' devices...'), end='')
+    print(as_in_progress_msg('Updating credentials on ' + str(len(device_uids)) + ' devices...'), end='')
     obj_refs = []
-    for asa_uid in asa_uids:
+    for device_uid in device_uids:
         obj_refs.append({
-            'uid': asa_uid,
-            'namespace': 'asa',
-            'type': 'configs'
+            'uid': device_uid,
+            'namespace': 'targets',
+            'type': 'devices'
         })
     job_context = {
         'credentials': json.dumps({
