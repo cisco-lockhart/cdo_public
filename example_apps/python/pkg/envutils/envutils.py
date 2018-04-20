@@ -14,6 +14,7 @@ OBJECT_CSV_URL = "{0}/aegis/rest/v1/services/targets/objectcsvs"
 OBJECTS_URL = "{0}/aegis/rest/v1/services/targets/objects"
 ANALYSIS_RESULTS_URL = "{0}/aegis/rest/v1/services/analysis/results"
 NOTES_URL = "{0}/aegis/rest/v1/services/common/notes"
+ACCESS_GROUPS_URL="{0}/aegis/rest/v1/services/targets/accessgroups"
 
 def get_base_url(env):
     if env == 'us':
@@ -40,6 +41,8 @@ def get_jobs_url(env):
 def get_devices_url(env):
     return DEVICES_URL.format(get_base_url(env))
 
+def get_access_groups_url(env):
+    return ACCESS_GROUPS_URL.format(get_base_url(env))
 
 def get_analysis_results_url(env):
     return ANALYSIS_RESULTS_URL.format(get_base_url(env))

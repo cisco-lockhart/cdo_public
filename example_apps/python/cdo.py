@@ -6,6 +6,7 @@ from pkg.analyse import analyser
 from pkg.importers import objectimporter
 
 from pkg.credentials import credentials
+from pkg.shadowed import shadows
 
 parser = argparse.ArgumentParser(description='CDO command line')
 parser.add_argument("-a", "--api-token", help="The API token to use")
@@ -25,8 +26,13 @@ import_parser = subparsers.add_parser('import')
 import_parser.add_argument("-i", "--input-file", help="The input file")
 
 update_credentials_parser = subparsers.add_parser('update-credentials', help='Update ASA credentials')
-update_credentials_parser .add_argument("-u", "--username", help="The username to authenticate to BDB")
-update_credentials_parser .add_argument("-q", "--query", help='The query to find the devices to update credentials for. E.g.: tags.labels:ctx will find all ASA devices with the label CTX')
+update_credentials_parser.add_argument("-u", "--username", help="The username to authenticate to BDB")
+update_credentials_parser.add_argument("-q", "--query", help='The query to find the devices to update credentials for. E.g.: tags.labels:ctx will find all ASA devices with the label CTX')
+
+shadow_rules_parser = subparsers.add_parser('shadowed', help='Perform operations on shadow rules')
+shadow_rules_parser.add_argument("-d", "--delete", help="Delete all shadowed rules", action='store_true')
+shadow_rules_parser.add_argument("-q", "--query", help='The query to find the devices to update shadow rules for. '
+                                                             'E.g.: tags.labels:ctx will find all ASA devices with the label CTX', default=None)
 
 args = parser.parse_args()
 
@@ -39,5 +45,7 @@ elif args.command == 'import':
     objectimporter.import_objects(api_token=args.api_token, env=args.env,csv_file_name=args.input_file)
 elif args.command == 'update-credentials':
     credentials.update_credentials(api_token=args.api_token, env=args.env, username=args.username, query=args.query)
+elif args.command == 'shadowed':
+    shadows.perform_shadowed_action(api_token=args.api_token, env=args.env, query=args.query, delete=args.delete)
 else:
    sys.stderr('Unrecognised command')
