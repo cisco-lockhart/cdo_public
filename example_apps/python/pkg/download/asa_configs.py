@@ -1,14 +1,11 @@
 #!/usr/bin/env python
 
-import requests
 import json
+
 import os
-import sys
+import requests
+
 from ..utils import *
-
-from .. import envutils
-from sty import fg, ef, rs
-
 
 NUM_DEVICES_TO_RETRIEVE_PER_QUERY = 50
 
@@ -27,6 +24,9 @@ def download_asa_configs(api_token, env, output_dir):
     response = requests.get(url='https://www.defenseorchestrator.com/aegis/rest/v1/services/targets/devices',
                             headers=headers,
                             params=params)
+    devices_json = json.loads(response)
+    for device_json in devices_json:
+        _save_device_config(device_name=device_json['name'], device_config=device_json['deviceConfig'], output_dir=output_dir)
 
     print(as_done_msg(download_msg))
 
