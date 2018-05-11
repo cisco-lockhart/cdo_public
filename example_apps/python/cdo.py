@@ -38,7 +38,7 @@ args = parser.parse_args()
 
 
 if args.command == 'download':
-    asa_configs.download_asa_configs(api_token=args.api_token, env=args.env, output_dir=args.output_dir)
+    asa_configs.download_asa_configs(api_token=args.api_token, output_dir=args.output_dir)
 elif args.command == 'analyse':
     analyser.analyse_configs(api_token=args.api_token, env=args.env, output_dir=args.output_dir, bdb_username=args.username)
 elif args.command == 'import':
