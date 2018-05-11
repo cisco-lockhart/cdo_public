@@ -2,6 +2,7 @@
 import argparse
 import sys
 from pkg.download import asa_configs
+from pkg.onboard import onboarder
 from pkg.analyse import analyser
 from pkg.importers import objectimporter
 
@@ -34,11 +35,15 @@ shadow_rules_parser.add_argument("-d", "--delete", help="Delete all shadowed rul
 shadow_rules_parser.add_argument("-q", "--query", help='The query to find the devices to update shadow rules for. '
                                                              'E.g.: tags.labels:ctx will find all ASA devices with the label CTX', default=None)
 
+onboard_parser = subparsers.add_parser('onboard')
+onboard_parser.add_argument("-c", "--config-dir", help="The directory holding the configuration files")
 args = parser.parse_args()
 
 
 if args.command == 'download':
     asa_configs.download_asa_configs(api_token=args.api_token, env=args.env, output_dir=args.output_dir)
+if args.command == 'onboard':
+    onboarder.upload_asa_configs(api_token=args.api_token, env=args.env, config_dir=args.config_dir)
 elif args.command == 'analyse':
     analyser.analyse_configs(api_token=args.api_token, env=args.env, output_dir=args.output_dir, bdb_username=args.username)
 elif args.command == 'import':
