@@ -18,6 +18,9 @@ def download_asa_configs(api_token, output_dir):
     print(download_msg, end='')
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
+
+    # YOUR CODE GOES HERE
+
     print(as_done_msg(''))
 
 
