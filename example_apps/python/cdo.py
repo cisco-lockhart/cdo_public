@@ -42,7 +42,7 @@ args = parser.parse_args()
 
 if args.command == 'download':
     asa_configs.download_asa_configs(api_token=args.api_token, env=args.env, output_dir=args.output_dir)
-if args.command == 'onboard':
+elif args.command == 'onboard':
     onboarder.upload_asa_configs(api_token=args.api_token, env=args.env, config_dir=args.config_dir)
 elif args.command == 'analyse':
     analyser.analyse_configs(api_token=args.api_token, env=args.env, output_dir=args.output_dir, bdb_username=args.username)
@@ -53,4 +53,4 @@ elif args.command == 'update-credentials':
 elif args.command == 'shadowed':
     shadows.perform_shadowed_action(api_token=args.api_token, env=args.env, query=args.query, delete=args.delete)
 else:
-   sys.stderr('Unrecognised command')
+   sys.stderr.write('Unrecognised command')
