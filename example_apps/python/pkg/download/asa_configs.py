@@ -12,6 +12,8 @@ from sty import fg, ef, rs
 
 NUM_DEVICES_TO_RETRIEVE_PER_QUERY = 50
 
+PROD_URL = 'https://www.defenseorchestrator.com'
+
 
 def download_asa_configs(api_token, output_dir):
     download_msg = as_in_progress_msg('Downloading configurations for ASAs from CDO...')
@@ -23,6 +25,8 @@ def download_asa_configs(api_token, output_dir):
 
     print(as_done_msg(''))
 
+def _build_url(namespace, type):
+    return PROD_URL + 'aegis/rest/v1/services/' + namespace + type
 
 def _save_device_config(device_name, device_config, output_dir):
     output_file = open(os.path.join(output_dir, device_name), 'w')
