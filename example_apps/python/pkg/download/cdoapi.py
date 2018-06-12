@@ -32,7 +32,7 @@ def get_num_devices(api_token):
     return result['aggregationQueryResult']
 
 def get_devices(api_token, offset=0, limit=50):
-    download_msg = as_in_progress_msg('Downloading configurations for ASAs from CDO...') 
+    download_msg = as_in_progress_msg('Downloading configurations for ASAs from CDO...(offset: ' + str(offset)) 
     print(as_in_progress_msg(download_msg), end='\r')
     params = {
         'q': '(deviceType:ASA)',
