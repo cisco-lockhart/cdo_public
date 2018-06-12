@@ -9,17 +9,16 @@ from ..utils import *
 from .. import envutils
 from sty import fg, ef, rs
 
-
-NUM_DEVICES_TO_RETRIEVE_PER_QUERY = 50
-
 PROD_URL = 'https://www.defenseorchestrator.com'
 
 
-def get_devices(api_token):
+def get_devices(api_token, offset=0, limit=50):
     download_msg = as_in_progress_msg('Downloading configurations for ASAs from CDO...') 
     print(as_in_progress_msg(download_msg), end='\r')
     params = {
         'q': '(deviceType:ASA)',
+        'offset': offset,
+        'limit': limit
     }
     headers = {
         "Authorization": "Bearer " + api_token,
