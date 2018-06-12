@@ -38,12 +38,8 @@ def get_devices(api_token):
 def _build_url(namespace, type):
     return PROD_URL + '/aegis/rest/v1/services/' + namespace + '/' + type
 
-def save_device_configs(devices, output_dir):
-    for device in devices:
-        _save_device_config(device['name'], device['deviceConfig'], output_dir)
-
-def _save_device_config(device_name, device_config, output_dir):
-    print(as_in_progress_msg('Saving ' + device_name +' to disk...'), end='')
-    output_file = open(os.path.join(output_dir, device_name), 'w')
-    output_file.write(device_config)
+def save_device_config(device, output_dir):
+    print(as_in_progress_msg('Saving ' + device['device_name'] +' to disk...'), end='')
+    output_file = open(os.path.join(output_dir, device['device_name']), 'w')
+    output_file.write(device['deviceConfig'])
     print(as_done_msg(''))
