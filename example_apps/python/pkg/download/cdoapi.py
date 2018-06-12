@@ -38,7 +38,7 @@ def _build_url(namespace, type):
     return PROD_URL + '/aegis/rest/v1/services/' + namespace + '/' + type
 
 def save_device_config(device, output_dir):
-    print(as_in_progress_msg('Saving ' + device['device_name'] +' to disk...'), end='')
-    output_file = open(os.path.join(output_dir, device['device_name']), 'w')
+    print(as_in_progress_msg('Saving ' + device['name'] +' to disk...'), end='')
+    output_file = open(os.path.join(output_dir, device['name']), 'w')
     output_file.write(device['deviceConfig'])
     print(as_done_msg(''))
