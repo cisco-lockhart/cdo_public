@@ -1,6 +1,4 @@
-    print(as_done_msg(''))
 #!/usr/bin/env python
-
 import requests
 import json
 import os
