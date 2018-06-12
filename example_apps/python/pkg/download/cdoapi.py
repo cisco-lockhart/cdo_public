@@ -11,6 +11,26 @@ from sty import fg, ef, rs
 PROD_URL = 'https://www.defenseorchestrator.com'
 
 
+def get_num_devices(api_token):
+    download_msg = as_in_progress_msg('Getting number of ASAs...') 
+    print(as_in_progress_msg(download_msg), end='')
+    params = {
+        'q': '(deviceType:ASA)',
+        'agg': 'count'
+    }
+    headers = {
+        "Authorization": "Bearer " + api_token,
+        "Content-Type": "application/json"
+    }
+
+    response = requests.get(url=_build_url(namespace='targets', type='devices'),
+                            headers=headers,
+                            params=params)
+
+    result = json.loads(response.text)    
+    print(as_done_msg(str(result['aggregationQueryResult']) + ' found')) 
+    return result['aggregationQueryResult']
+
 def get_devices(api_token, offset=0, limit=50):
     download_msg = as_in_progress_msg('Downloading configurations for ASAs from CDO...') 
     print(as_in_progress_msg(download_msg), end='\r')
