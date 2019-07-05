@@ -12,6 +12,7 @@ JOBS_URL="{0}/aegis/rest/v1/services/state-machines/jobs"
 DEVICES_URL = "{0}/aegis/rest/v1/services/targets/devices"
 OBJECT_CSV_URL = "{0}/aegis/rest/v1/services/targets/objectcsvs"
 OBJECTS_URL = "{0}/aegis/rest/v1/services/targets/objects"
+OBJECT_URL = "{0}/aegis/rest/v1/services/targets/objects/{1}"
 ANALYSIS_RESULTS_URL = "{0}/aegis/rest/v1/services/analysis/results"
 NOTES_URL = "{0}/aegis/rest/v1/services/common/notes"
 ACCESS_GROUPS_URL="{0}/aegis/rest/v1/services/targets/accessgroups"
@@ -54,10 +55,12 @@ def get_notes_url(env):
 def get_object_csv_url(env):
     return OBJECT_CSV_URL.format(get_base_url(env))
 
-
 def get_objects_url(env):
     return OBJECTS_URL.format(get_base_url(env))
 
+
+def get_object_url(env, obj_uid):
+    return OBJECT_URL.format(get_base_url(env), obj_uid)
 
 def get_headers(api_token):
     return {

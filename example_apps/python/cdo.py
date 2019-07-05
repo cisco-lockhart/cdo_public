@@ -19,6 +19,10 @@ download_parser = subparsers.add_parser('download')
 download_parser.add_argument("-o", "--output-dir", help="The output directory", default='/tmp/configs')
 download_parser.add_argument("-t", "--type", help="The device types to download configs for", choices=['asa'], default='asa')
 
+delete_unused_objects_parser = subparsers.add_parser('delete-unused')
+delete_unused_objects_parser.add_argument("-o", "--output-file", help="The output file", default='/tmp/unused-objs.txt')
+
+
 analyser_parser = subparsers.add_parser('analyse')
 analyser_parser.add_argument("-o", "--output-dir", help="The output directory", default='/tmp/configs')
 analyser_parser.add_argument("-u", "--username", help="The username to authenticate to BDB")
@@ -39,9 +43,10 @@ onboard_parser = subparsers.add_parser('onboard')
 onboard_parser.add_argument("-c", "--config-dir", help="The directory holding the configuration files")
 args = parser.parse_args()
 
-
 if args.command == 'download':
     asa_configs.download_asa_configs(api_token=args.api_token, env=args.env, output_dir=args.output_dir)
+elif args.command == 'delete-unused':
+    asa_configs.delete_unused_objects(api_token=args.api_token, env=args.env, output_file_name = args.output_file)
 elif args.command == 'onboard':
     onboarder.upload_asa_configs(api_token=args.api_token, env=args.env, config_dir=args.config_dir)
 elif args.command == 'analyse':
