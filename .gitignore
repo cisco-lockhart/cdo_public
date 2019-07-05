@@ -1,0 +1,10 @@
+*.pyc
+**/*.pyc
+.idea
+venv
+**/*.iml
+.DS_Store
+
+report_generator/node_modules
+report.html
+**/node_modules
