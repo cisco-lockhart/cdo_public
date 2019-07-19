@@ -9,6 +9,7 @@ SPECIFIC_DEVICE_URL="{0}/aegis/rest/v1/device/{1}/specific-device"
 ASAS_URL="{0}/aegis/rest/v1/services/asa/configs"
 ASA_URL=ASAS_URL + '/{1}'
 JOBS_URL="{0}/aegis/rest/v1/services/state-machines/jobs"
+JOB_URL="{0}/aegis/rest/v1/services/state-machines/jobs/{1}"
 DEVICES_URL = "{0}/aegis/rest/v1/services/targets/devices"
 OBJECT_CSV_URL = "{0}/aegis/rest/v1/services/targets/objectcsvs"
 OBJECTS_URL = "{0}/aegis/rest/v1/services/targets/objects"
@@ -39,6 +40,9 @@ def get_asa_url(env, asa_uid):
 def get_jobs_url(env):
     return JOBS_URL.format(get_base_url(env))
 
+def get_job_url(env, job_uid):
+    return JOB_URL.format(get_base_url(env), job_uid)
+
 def get_devices_url(env):
     return DEVICES_URL.format(get_base_url(env))
 
@@ -51,13 +55,11 @@ def get_analysis_results_url(env):
 def get_notes_url(env):
     return NOTES_URL.format(get_base_url(env))
 
-
 def get_object_csv_url(env):
     return OBJECT_CSV_URL.format(get_base_url(env))
 
 def get_objects_url(env):
     return OBJECTS_URL.format(get_base_url(env))
-
 
 def get_object_url(env, obj_uid):
     return OBJECT_URL.format(get_base_url(env), obj_uid)
@@ -67,4 +69,5 @@ def get_headers(api_token):
         "Authorization": "Bearer " + api_token,
         "Content-Type": "application/json"
     }
+
 

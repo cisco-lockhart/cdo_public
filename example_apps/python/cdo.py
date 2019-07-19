@@ -6,6 +6,7 @@ from pkg.onboard import onboarder
 from pkg.analyse import analyser
 from pkg.importers import objectimporter
 from pkg.unused import unused_objects
+from pkg.jobs import deploy
 
 from pkg.credentials import credentials
 from pkg.shadowed import shadows
@@ -23,11 +24,8 @@ download_parser.add_argument("-t", "--type", help="The device types to download 
 delete_unused_objects_parser = subparsers.add_parser('delete-unused')
 delete_unused_objects_parser.add_argument("-o", "--output-file", help="The output file", default='/tmp/unused-objs.txt')
 
-<<<<<<< HEAD
-=======
 view_unused_objects_parser = subparsers.add_parser('view-unused')
 view_unused_objects_parser.add_argument("-o", "--output-file", help="The output file", default='/tmp/unused-objs.txt')
->>>>>>> improve-unused-objects
 
 analyser_parser = subparsers.add_parser('analyse')
 analyser_parser.add_argument("-o", "--output-dir", help="The output directory", default='/tmp/configs')
@@ -47,19 +45,18 @@ shadow_rules_parser.add_argument("-q", "--query", help='The query to find the de
 
 onboard_parser = subparsers.add_parser('onboard')
 onboard_parser.add_argument("-c", "--config-dir", help="The directory holding the configuration files")
+
+deploy_parser = subparsers.add_parser('deploy')
+deploy_parser.add_argument("-q", "--query", help='The query to find the devices to deploy.')
+
 args = parser.parse_args()
 
 if args.command == 'download':
     asa_configs.download_asa_configs(api_token=args.api_token, env=args.env, output_dir=args.output_dir)
-<<<<<<< HEAD
-elif args.command == 'delete-unused':
-    asa_configs.delete_unused_objects(api_token=args.api_token, env=args.env, output_file_name = args.output_file)
-=======
 elif args.command == 'view-unused':
     unused_objects.view_unused_objects(api_token=args.api_token, env=args.env, output_file_name = args.output_file)
 elif args.command == 'delete-unused':
     unused_objects.delete_unused_objects(api_token=args.api_token, env=args.env, output_file_name = args.output_file)
->>>>>>> improve-unused-objects
 elif args.command == 'onboard':
     onboarder.upload_asa_configs(api_token=args.api_token, env=args.env, config_dir=args.config_dir)
 elif args.command == 'analyse':
@@ -70,5 +67,7 @@ elif args.command == 'update-credentials':
     credentials.update_credentials(api_token=args.api_token, env=args.env, username=args.username, query=args.query)
 elif args.command == 'shadowed':
     shadows.perform_shadowed_action(api_token=args.api_token, env=args.env, query=args.query, delete=args.delete)
+elif args.command == 'deploy':
+    deploy.deploy_to_devices(api_token=args.api_token, env=args.env, query=args.query)
 else:
    sys.stderr.write('Unrecognised command')
