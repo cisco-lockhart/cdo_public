@@ -1,0 +1,5 @@
+#!/bin/sh -x
+sn_token=$(curl -X POST "https://login.microsoftonline.com/<customer>/oauth2/token?api-version=1.0" -d "grant_type=client_credentials&client_id=<uid>&client_secret=${MS_SECRET}&resource=https%3A%2F%2<server>" -H "Content-Type: application/x-www-form-urlencoded" | jq -r '.access_token')
+
+curl -H "Authorization: Bearer ${sn_token}" "https://<servicenow server>/apg-001-servicenow/v1/now/table/change_request?sysparm_fields=number,short_description,sys_created_on&sysparm_query=active=true^ORDERBYDESCsys_created_on" | jq '.result[] | .number +","+.short_description' | sed 's/,"/,NO DESCRIPTION"/g' | sed 's/"//g' > change_requests_servicenow.out
+
