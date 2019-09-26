@@ -1,0 +1,5 @@
+#!/bin/sh -x
+
+export OAUTH=xxx
+export MS_SECRET=yyy
+

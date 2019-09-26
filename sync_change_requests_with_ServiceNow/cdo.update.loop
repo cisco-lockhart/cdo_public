@@ -1,0 +1,13 @@
+#!/bin/sh -x
+
+source set.keys
+
+while true
+do
+date
+bash get.from.servicenow
+bash cdo.update.change.requests change_requests_servicenow.out
+sleep 10
+done
+
+

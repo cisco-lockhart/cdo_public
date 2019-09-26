@@ -1,0 +1,49 @@
+#!/bin/sh -x
+
+#Usage:
+#export OAUTH=my_API_token
+#bash cdo.update.change.requests change_requests_servicenow.out 	
+ 
+log  () { echo $(date +"[%F %R:%S] ") "$@"; }
+fail () { log "$@"; exit 1; }
+ 
+which -s jq || fail "jq must be installed"
+which -s diff || fail "diff must be installed"
+[ ${OAUTH} ] || fail "You must specify OAuth token in the \$OAUTH system variable"
+[ ${1} ] || fail "${0} <input file name>"
+ 
+API_URL="https://www.defenseorchestrator.com/aegis/rest/v1/services"
+#API_URL="https://staging.dev.lockhart.io/aegis/rest/v1/services"
+
+# validate OAUTH token
+curl -s -o /dev/null -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${API_URL}" || fail "\"${OAUTH}\" is an invalid OAuth token"
+ 
+# retrieve all change requests
+CR_URL="${API_URL}/changerequest/instances"
+curl -s -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${CR_URL}" | jq '.[] | .name +","+.description' | sed 's/"//g' > change_requests_cdo.out
+
+CHANGE_REQUESTS_OTHER=${1}
+
+echo add to CDO
+grep -Fxv -f change_requests_cdo.out $CHANGE_REQUESTS_OTHER | while read -r line ; do
+    echo "Adding $line"
+
+	IFS=',' read -r -a array <<< "$line"
+    echo "{ \"name\" : \""${array[0]}"\", \"description\" : \""${array[1]}"\" }" > body.json
+	curl -s -o output.txt -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X POST --data @body.json "${CR_URL}" || fail "Could not add change request"
+done
+
+echo remove from CDO
+grep -Fxv -f $CHANGE_REQUESTS_OTHER change_requests_cdo.out | while read -r line ; do
+    echo "Removing $line"
+
+	IFS=',' read -r -a array <<< "$line"
+
+	cr_uid_to_remove=$(curl -s -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${CR_URL}/?q=name:${array[0]}" | jq -r '.[0].uid')
+	echo $cr_uid_to_remove
+	curl -s -o output.txt -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X DELETE "${CR_URL}/${cr_uid_to_remove}" || fail "Could not add change request"
+done
+
+
+exit
+
