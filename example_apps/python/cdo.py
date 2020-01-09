@@ -7,6 +7,7 @@ from pkg.analyse import analyser
 from pkg.importers import objectimporter
 from pkg.unused import unused_objects
 from pkg.jobs import deploy
+from pkg.objects import object_manipulator
 
 from pkg.credentials import credentials
 from pkg.shadowed import shadows
@@ -49,6 +50,16 @@ onboard_parser.add_argument("-c", "--config-dir", help="The directory holding th
 deploy_parser = subparsers.add_parser('deploy')
 deploy_parser.add_argument("-q", "--query", help='The query to find the devices to deploy.')
 
+create_object_parser = subparsers.add_parser('create-network-object')
+create_object_parser.add_argument('-n', '--name', help='The name of the network object.', required=True)
+create_object_parser.add_argument('-d', '--device-type', help='The device type (default: ASA)', default='ASA')
+create_object_parser.add_argument('-i', '--ip', help='The IP address to store in the network object.', required=True)
+
+create_objects_parser = subparsers.add_parser('create-network-group')
+create_objects_parser.add_argument('-n', '--name', help='The name of the ASA network object group.', required=True)
+create_objects_parser.add_argument('-i', '--ips', help='The IP addresses to store in the network object group (comma-separated).', required=True)
+create_objects_parser.add_argument('-d', '--device-type', help='The device type (default: ASA; currently only ASA is supported)', default='ASA')
+
 args = parser.parse_args()
 
 if args.command == 'download':
@@ -69,5 +80,10 @@ elif args.command == 'shadowed':
     shadows.perform_shadowed_action(api_token=args.api_token, env=args.env, query=args.query, delete=args.delete)
 elif args.command == 'deploy':
     deploy.deploy_to_devices(api_token=args.api_token, env=args.env, query=args.query)
+elif args.command == 'create-network-object':
+    object_manipulator.create_network_object(api_token=args.api_token, env=args.env, name=args.name, ip=args.ip, device_type=args.device_type)
+elif args.command == 'create-network-group':
+    object_manipulator.create_network_object_group(api_token=args.api_token, env=args.env, name=args.name, ips=args.ips.split(','),
+                                             device_type=args.device_type)
 else:
    sys.stderr.write('Unrecognised command')
