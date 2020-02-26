@@ -1,0 +1,9 @@
+{
+  "action": "WRITE",
+  "jobContext": null,
+  "objRefs": [],
+  "overallProgress": "PENDING",
+  "schedule": null,
+  "triggerState": "PENDING_ORCHESTRATION"
+}
+
