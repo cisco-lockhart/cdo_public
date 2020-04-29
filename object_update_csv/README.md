@@ -1,10 +1,12 @@
 # Update a bunch of objects from CSV
 
 CSV should look like:
+```
 Device_name,Object_name,value
 Hollywood,doron,10.10.238.16-10.10.238.17
 Hollywood,15MayStop,10.10.5.31,,,
 jay-ftd-6.5,gateway1542,10.10.5.31
+```
 
 value can be:
 1. An IP address
