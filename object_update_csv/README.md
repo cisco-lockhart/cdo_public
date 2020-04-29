@@ -1,18 +1,28 @@
-# Integration with VMware NSX: automatic update of ASAs object with ever-changing list of VMs in NSX
+# Update a bunch of objects from CSV
 
-Customer has an NSX env, servers are coming up and down all the time, need to udpate ASA policy to include/exclude these servers.
-A deal was on the table, PAN can do it, CDO can't. 
+CSV should look like:
+Device_name,Object_name,value
+Hollywood,doron,10.10.238.16-10.10.238.17
+Hollywood,15MayStop,10.10.5.31,,,
+jay-ftd-6.5,gateway1542,10.10.5.31
 
-So there's a loop running every second that:
-1. Getting the current list of IPs from NSX
-2. Getting the object from CDO
-3. Figure the diff
-4. PUT changes to object
-5. Create a job to push to affected devices(!)
+value can be:
+1. An IP address
+2. A CIDR
+3. A range expressed by a dash for exmaple: 10.10.10.10-20.20.20.20
 
-The flow we showed:
-1.	You have 3 VMs running and happy, in cdo there’s a network object group called “application servers” with their 3 IP addresses, and it participates in the policy, giving and denying access to these VMs. This is a “shared object” in CDO, maintained across multiple firewalls. 
-2.	You spin a new 4th VM in NSX.
-3.	The IP of the 4th VM is automatically added to the “application servers” network object group, across all firewalls and the policy immediately deployed to all firewalls. 
-4.	Victory. 
+
+Usage: 
+```
+bash cdo.update.object input.csv 
+```
+
+The above will perform a dry run, parse the file, will run API calls to fetch device uid and object uid, compose the PUT body, print everything so we can make sure everything is OK with the input.
+
+```
+bash cdo.update.object input.csv doit
+```
+
+The added `doit` will make it actually run the PUT commands to make updates to the object and invoke mayhem across the known universe. 
+
 
