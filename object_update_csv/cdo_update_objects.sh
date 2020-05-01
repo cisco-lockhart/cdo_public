@@ -2,7 +2,7 @@
 
 #Usage:
 #export OAUTH=my_API_token
-#bash cdo.update.object input.csv doit
+#bash cdo_update_objects.sh input.csv doit
  
 log  () { echo "$@"; }
 failexit () { log "failure: $@"; exit 1; }
