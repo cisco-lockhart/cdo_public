@@ -16,13 +16,13 @@ value can be:
 
 Usage: 
 ```
-bash cdo.update.object input.csv 
+bash cdo_update_objects.sh input.csv 
 ```
 
 The above will perform a dry run, parse the file, will run API calls to fetch device uid and object uid, compose the PUT body, print everything so we can make sure everything is OK with the input.
 
 ```
-bash cdo.update.object input.csv doit
+bash cdo_update_objects.sh input.csv doit
 ```
 
 The added `doit` will make it actually run the PUT commands to make updates to the object and invoke mayhem across the known universe. 
