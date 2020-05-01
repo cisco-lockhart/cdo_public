@@ -20,7 +20,6 @@ curl -s -o /dev/null -f -H "Content-Type: application/json" -H "Authorization: b
 
 [ ${2} ] || log "****** DRY RUN **********"
 
-#while IFS=, read -r DEVICE_NAME OBJECT_NAME NEW_SOURCE NEW_DEST alltherest
 while read -r line
 do
   # eliminate bad bad bad characters. And adding some padded comas to avoid other issues
