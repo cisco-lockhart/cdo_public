@@ -4,7 +4,6 @@
 #export OAUTH=my_API_token
 #bash cdo.update.object input.csv doit
  
-# log  () { echo $(date +"[%F %R:%S] ") "$@"; }
 log  () { echo "$@"; }
 failexit () { log "failure: $@"; exit 1; }
 fail () { log "failure: $@"; }
@@ -57,7 +56,6 @@ do
   # find and retrieve the object
   OBJECT_URL="${API_URL}/targets/objects"
   OBJECT_SEARCH_URL="${OBJECT_URL}?q=name:${OBJECT_NAME}%20AND%20deviceUid:${DEVICE_UID}"
-  # curl -s -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${OBJECT_SEARCH_URL}" | jq
   unset OBJECT_UID
   OBJECT_UID=$(curl -s -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${OBJECT_SEARCH_URL}" | jq -r '.[0].uid')
 
@@ -68,8 +66,6 @@ do
   fi
 
   log "   (with object UID): ${DEVICE_NAME} ${DEVICE_UID} ${OBJECT_NAME} ${OBJECT_UID} ${NEW_SOURCE} ${NEW_DEST}"
-
-  # echo "[ { \"@type\": \"NetworkContent\", \"sourceElement\": \"${NEW_VALUE}\", \"destinationElement\": null, \"wildcardMaskElement\": null } ]" > body.json
 
   echo "{ \"contents\" : [ { \"@type\": \"NetworkContent\", \"sourceElement\": \"${NEW_SOURCE}\", \"destinationElement\": ${NEW_DEST}, \"wildcardMaskElement\": null } ] }" > body.json
   log "   PUT body: "`cat body.json`
