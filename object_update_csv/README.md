@@ -1,0 +1,30 @@
+# Update a bunch of objects from CSV
+
+CSV should look like:
+```
+Device_name,Object_name,value
+Hollywood,doron,10.10.238.16-10.10.238.17
+Hollywood,15MayStop,10.10.5.31,,,
+jay-ftd-6.5,gateway1542,10.10.5.31
+```
+
+value can be:
+1. An IP address
+2. A CIDR
+3. A range expressed by a dash for exmaple: 10.10.10.10-20.20.20.20
+
+
+Usage: 
+```
+bash cdo_update_objects.sh input.csv 
+```
+
+The above will perform a dry run, parse the file, will run API calls to fetch device uid and object uid, compose the PUT body, print everything so we can make sure everything is OK with the input.
+
+```
+bash cdo_update_objects.sh input.csv doit
+```
+
+The added `doit` will make it actually run the PUT commands to make updates to the object and invoke mayhem across the known universe. 
+
+
