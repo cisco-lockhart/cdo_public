@@ -2,7 +2,7 @@
 
 #Usage:
 #export OAUTH=my_API_token
-#bash cdo.update.object Web-Servers nsx.ip 	
+#bash run_bulk_cli.sh devices 	
  
 log  () { echo $(date +"[%F %R:%S] ") "$@"; }
 fail () { log "$@"; exit 1; }
@@ -10,18 +10,12 @@ fail () { log "$@"; exit 1; }
 which -s jq || fail "jq must be installed"
 which -s diff || fail "diff must be installed"
 [ ${OAUTH} ] || fail "You must specify OAuth token in the \$OAUTH system variable"
-# [ ${1} ] || fail "${0} <object name> <input file name>"
-# [ ${2} ] || fail "${0} <object name> <input file name>"
-# [ -f ${2} ] || fail "input file not found: ${2}"
+[ ${1} ] || fail "${0} <input file name>"
+[ -f ${1} ] || fail "input file not found: ${2}"
  
 # validate OAUTH token
 API_URL="https://www.defenseorchestrator.com/aegis/rest/v1/services"
 curl -s -o /dev/null -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${API_URL}" || fail "\"${OAUTH}\" is an invalid OAuth token"
-
-DEVICE_URL="${API_URL}/targets/devices"
-curl -s -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${DEVICE_URL}?q=deviceType:ASA" | jq -r '.[].uid' > device.uids
-
-echo "8d3f115f-6b96-442c-bbd5-ad9bb513ae6d" > device.uids
 
 
 # Initialize the job to no devices
@@ -35,7 +29,7 @@ do
   then
     JOB=$(echo "${JOB}" | jq -c --arg UID ${DEVICE_UID} '.objRefs |= . + [ {"uid": $UID,"namespace": "targets", "type": "devices"} ] ')
   fi
-done < device.uids
+done < devices
 
 echo ${JOB} > body.json
 
@@ -62,8 +56,9 @@ curl -s -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH
 
 EXECUTIONS=$(curl -s -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${API_URL}/cli/executions?q=jobUid:${JOB_ID}" )
 
-
- | jq -r '.[] | .deviceUid + " " + .response' )
-
 echo $EXECUTIONS
+
+echo $EXECUTIONS | jq -r '.[] | .deviceUid + " " + .response' )
+
+
 
