@@ -2,7 +2,7 @@
 
 #Usage:
 #export OAUTH=my_API_token
-#bash run_bulk_cli.sh devices results	
+#bash run_bulk_cli.sh devices results	"failover exec standby show version\nshow version"
  
 log  () { echo $(date +"[%F %R:%S] ") "$@"; }
 fail () { log "$@"; exit 1; }
@@ -10,14 +10,14 @@ fail () { log "$@"; exit 1; }
 which -s jq || fail "jq must be installed"
 which -s diff || fail "diff must be installed"
 [ ${OAUTH} ] || fail "You must specify OAuth token in the \$OAUTH system variable"
-[ ${1} ] || fail "${0} <input file name> <results file name>"
+[ ${1} ] || fail "${0} <input file name> <results file name> <command>"
 [ -f ${1} ] || fail "input file not found: ${1}"
-[ ${2} ] || fail "${0} <input file name> <results file name>"
+[ ${2} ] || fail "${0} <input file name> <results file name> <command>"
+[ "${3}" ] || fail "${0} <input file name> <results file name> <command>"
 
 DEVICES_FILE=${1}
 RESULTS_FILE=${2}
-
-COMMAND="failover exec standby show version\nshow version"
+COMMAND=${3}
 
 # validate OAUTH token
 API_URL="https://www.defenseorchestrator.com/aegis/rest/v1/services"
