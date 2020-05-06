@@ -1,0 +1,7 @@
+{
+  "action": "CLI",
+  "objRefs": [],
+  "schedule": null,
+  "overallProgress": "PENDING",
+  "triggerState": "PENDING_ORCHESTRATION"
+}
