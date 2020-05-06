@@ -17,6 +17,11 @@ API_URL="https://www.defenseorchestrator.com/aegis/rest/v1/services"
 curl -s -o /dev/null -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${API_URL}" || fail "\"${OAUTH}\" is an invalid OAuth token"
 
 DEVICE_URL="${API_URL}/targets/devices"
-# curl -s -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${DEVICE_URL}?q=deviceType:ASA" | jq -r '.[].uid' > device.uids
-curl -s -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${DEVICE_URL}?q=deviceType:ASA" | jq -r '.[] | .uid + "," + .name' 
+curl -s -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${DEVICE_URL}?q=deviceType:ASA+AND+model:false" | jq -r '.[] | .uid + "," + .name' > allDevices
 
+while read line
+do
+  IFS=',' read -r DEVICE_UID all_the_rest <<< "$line"
+  FAILOVER_MODE=$(curl -s -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${DEVICE_URL}/${DEVICE_UID}/configs" | jq -r '.[] | .associated.metadata.failoverMode' )
+  [[ $FAILOVER_MODE =~ ^ACTIVE_........?$ ]] && echo $line
+done < allDevices

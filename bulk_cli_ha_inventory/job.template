@@ -1,11 +1,7 @@
 {
   "action": "CLI",
-  "jobContext": {
-      "command": "show version"
-  },
   "objRefs": [],
   "schedule": null,
   "overallProgress": "PENDING",
   "triggerState": "PENDING_ORCHESTRATION"
 }
-

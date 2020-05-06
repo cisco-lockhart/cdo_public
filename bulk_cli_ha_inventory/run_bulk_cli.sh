@@ -16,32 +16,29 @@ which -s diff || fail "diff must be installed"
 
 DEVICES_FILE=${1}
 RESULTS_FILE=${2}
- 
+
+COMMAND="failover exec standby show version\nshow version"
+
 # validate OAUTH token
 API_URL="https://www.defenseorchestrator.com/aegis/rest/v1/services"
 curl -s -o /dev/null -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${API_URL}" || fail "\"${OAUTH}\" is an invalid OAuth token"
 
-
-# Initialize the job to no devices
-JOB=$(<job.template)
-
 # add device uids to job
-DEVICE_URL="${API_URL}/targets/devices"
+JOB=$(<job.template)
 while read line
 do
   IFS=',' read -r DEVICE_UID all_the_rest <<< "$line"
-  FAILOVER_MODE=$(curl -s -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${DEVICE_URL}/${DEVICE_UID}/configs" | jq -r '.[] | .associated.metadata.failoverMode' )
-  if [ $FAILOVER_MODE == "OFF" ] 
-  then
-    JOB=$(echo "${JOB}" | jq -c --arg UID ${DEVICE_UID} '.objRefs |= . + [ {"uid": $UID,"namespace": "targets", "type": "devices"} ] ')
-  fi
+  JOB=$(echo "${JOB}" | jq -c --arg UID ${DEVICE_UID} '.objRefs |= . + [ {"uid": $UID,"namespace": "targets", "type": "devices"} ] ')
 done < $DEVICES_FILE
 
+# add command to job
+# COMMAND="failover exec standby show versions"
+JOB=$(echo "${JOB}" | jq --arg cmd "${COMMAND}" '. + {jobContext: {command : ($cmd)}} ')
+
+# run the job
 echo ${JOB} > body.json
-
+cat body.json | jq
 JOB_URL="${API_URL}/state-machines/jobs"
-cat body.json
-
 JOB_ID=$(curl -s -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X POST --data @body.json "${JOB_URL}" | jq -r '.uid ' ) 
 
 STATUS=$(curl -s -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${JOB_URL}/${JOB_ID}" | jq -r '.overallProgress')
@@ -53,12 +50,5 @@ do
 done
 log $STATUS
 
-curl -s -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${API_URL}/cli/executions?q=jobUid:${JOB_ID}" | jq  > tmpResult
+curl -s -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${API_URL}/cli/executions?q=jobUid:${JOB_ID}" | jq '.[] |  { deviceUid, deviceName, executionState, errorMsg, response }' | jq --slurp '.' > $RESULTS_FILE
 
-echo "" > tmpResult1
-while IFS=',' read -r DEVICE_UID DEVICE_NAME
-do
-  cat $RESULTS_FILE | jq ".[] | select(.deviceUid == \"${DEVICE_UID}\") | { deviceUid, deviceName: \"${DEVICE_NAME}\", response }" >> tmpResult1
-done < $DEVICES_FILE
-
-cat tmpResult1 | jq --slurp '.' > $RESULTS_FILE
