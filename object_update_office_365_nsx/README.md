@@ -1,9 +1,6 @@
 # Automated object (Network Group) update with IP addresses
 
-Integration with VMware NSX: automatic update of ASAs object with ever-changing list of VMs in NSX
-
-
-## Allow access to Office 365. 
+## Allow access to Office 365
 Fetch Office 365 IPs and update a Network Group with these IPs. 
 To run the above script do:
 
@@ -11,8 +8,6 @@ To run the above script do:
 2. Assign this object to at least 2 ASAs (so we create a shared object out of it)
 3. Get a long-lived token for your tenant
 4. On the command-line, run the following:
-
-Then run:
 ```
 export OAUTH=<my_token_from_#3>
 curl -s 'https://endpoints.office.com/endpoints/worldwide?clientrequestid=b10c5ed1-bad1-445f-b386-b919946339a7' | jq -r ".[] | { ips: .ips[]? } | .[]" | grep -v : | sort -u > o365.ip
