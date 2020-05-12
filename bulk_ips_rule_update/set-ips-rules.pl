@@ -14,7 +14,6 @@ if ($num_args != 2) {
 }
 
 my $base_url = "https://www.defenseorchestrator.com";
-$base_url = "https://staging.dev.lockhart.io/";
 
 my $config_name = $ARGV[0];
 my $ips_setting = $ARGV[1];
