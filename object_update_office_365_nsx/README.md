@@ -1,4 +1,21 @@
-# Integration with VMware NSX: automatic update of ASAs object with ever-changing list of VMs in NSX
+# Automated object (Network Group) update with IP addresses
+
+## Allow access to Office 365
+Fetch Office 365 IPs and update a Network Group with these IPs. 
+To run the above script do:
+
+1. Create a "network group" object called O365 and give it some default values.
+2. Assign this object to at least 2 ASAs (so we create a shared object out of it)
+3. Get a long-lived token for your tenant
+4. On the command-line, run the following:
+```
+export OAUTH=<my_token_from_#3>
+curl -s 'https://endpoints.office.com/endpoints/worldwide?clientrequestid=b10c5ed1-bad1-445f-b386-b919946339a7' | jq -r ".[] | { ips: .ips[]? } | .[]" | grep -v : | sort -u > o365.ip
+bash cdo.update.object O365 o365.ip
+```
+
+
+## Integration with VMware NSX: automatic update of ASAs object with ever-changing list of VMs in NSX
 
 Customer has an NSX env, servers are coming up and down all the time, need to udpate ASA policy to include/exclude these servers.
 A deal was on the table, PAN can do it, CDO can't. 
