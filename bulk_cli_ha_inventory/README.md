@@ -25,4 +25,5 @@ In this directory I have everything I need to succeed in this, hopefully in sepa
   }
 ]
 ```
-3. `./parse_results.sh results` -- can be painful... This is where I'm at now...
+
+Now, you have a nice json with all the data. View it with your own eyes or parse it with your favorite tool. Enjoy.
