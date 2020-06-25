@@ -23,7 +23,6 @@ curl -s -o /dev/null -f -H "Content-Type: application/json" -H "Authorization: b
 
 [ ${2} ] || log "****** DRY RUN **********"
 
-#while IFS=, read -r DEVICE_NAME OBJECT_NAME NEW_SOURCE NEW_DEST alltherest
 while read -r line; do
   # eliminate bad bad bad characters. And adding some padded comas to avoid other issues
   line=${line//[$'\t\r\n ']/},,,,,,
@@ -76,7 +75,6 @@ while read -r line; do
   log "   Existing overrides ${CURRENT_OVERRIDES_EXCLUDING_DEVICE}"
   NEW_OVERRIDE="{ \"reference\": {\"uid\": \"${DEVICE_UID}\", \"@type\": \"ObjectReferenceForAtomicOperations\", \"namespace\": \"targets\", \"type\": \"devices\"}, \"overrideContents\" : [ { \"@type\": \"NetworkContent\", \"sourceElement\": \"${NEW_SOURCE}\", \"destinationElement\": ${NEW_DEST}, \"wildcardMaskElement\": null } ] }"
 
-  # echo "[ { \"@type\": \"NetworkContent\", \"sourceElement\": \"${NEW_VALUE}\", \"destinationElement\": null, \"wildcardMaskElement\": null } ]" > body.json
   echo $CURRENT_OVERRIDES_EXCLUDING_DEVICE | jq --argjson NEW_OVERRIDE "${NEW_OVERRIDE}" '. + [$NEW_OVERRIDE] | { overrides: . }' > body.json
   log "   PUT body: "`cat body.json`
 
