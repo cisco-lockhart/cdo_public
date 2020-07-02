@@ -18,7 +18,7 @@ which -s jq || fail "jq must be installed"
 [ -f ${1} ] || fail "input file not found: ${1}"
 
 # validate OAUTH token
-API_URL="https://scale.dev.lockhart.io/aegis/rest/v1/services"
+API_URL="https://www.defenseorchestrator.com/aegis/rest/v1/services"
 curl -s -o /dev/null -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${API_URL}" || failexit "\"${OAUTH}\" is an invalid OAuth token"
 
 [ ${2} ] || log "****** DRY RUN **********"
