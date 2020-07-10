@@ -10,7 +10,7 @@ def deploy_to_devices(api_token, env, query):
     in_progress_msg = as_in_progress_msg('Triggering deploy to ' + str(len(device_uids)) + ' devices in env ' + env)
     print(in_progress_msg, end='\r')
     data = json.dumps({
-            'action': 'READ',
+            'action': 'WRITE',
             'objRefs': obj_refs,
             'triggerState': 'PENDING_ORCHESTRATION'
         })
