@@ -54,4 +54,4 @@ To execute script in any other valid environment, the envorionment name must be 
 - https://edge.apj.cdo.cisco.com
 
 To run bulk onboarding script, run the following: 
-- `python3 script.py -t <your token here> -u <optional cdo environment url>`
+- `python3 script.py -u <optional cdo environment url> -t <your access token here>`
