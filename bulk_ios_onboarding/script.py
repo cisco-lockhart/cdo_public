@@ -15,6 +15,7 @@ parser.add_argument('-t', '--token', type=str, help='the access token for CDO')
 args = parser.parse_args()
 CDO_ENDPOINT = args.url or "https://defenseorchestrator.com"
 API_TOKEN = args.token.strip()
+DEVICES_ENDPOINT = 'services/targets/devices/'
 
 def cdo_query(url, method, body=None):
     query_url = CDO_ENDPOINT + '/aegis/rest/v1/' + url
@@ -28,7 +29,7 @@ def cdo_query(url, method, body=None):
 
 
 def is_waiting_for_data(uid):
-    device = cdo_query('services/targets/devices/' + uid, 'GET')
+    device = cdo_query(DEVICES_ENDPOINT + uid, 'GET')
     return device['status'] == 'WAITING_FOR_DATA'
 
 
@@ -53,7 +54,7 @@ def create_integration_device(device, public_key_pem, key_id):
         'ipv4': ipv4,
     }
 
-    ios_device = cdo_query('services/targets/devices/', 'POST', post_body)
+    ios_device = cdo_query(DEVICES_ENDPOINT, 'POST', post_body)
 
     try:
         polling.poll(lambda: is_waiting_for_data(ios_device['uid']), step=.25, timeout=60)
@@ -80,7 +81,7 @@ def create_integration_device(device, public_key_pem, key_id):
     }
 
     print('Sending credentials to: %s' % name)
-    return cdo_query('services/targets/devices/' + ios_device['uid'], 'PUT', update_data)
+    return cdo_query(DEVICES_ENDPOINT + ios_device['uid'], 'PUT', update_data)
 
 
 def main():
