@@ -12,10 +12,12 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('-u', '--url', type=str, help='the CDO url to use')
 parser.add_argument('-t', '--token', type=str, help='the access token for CDO')
+parser.add_argument('-s', '--sdcIndex', type=int, help='the index of the sdc to use based on response from lar proxy')
 args = parser.parse_args()
 CDO_ENDPOINT = args.url or "https://defenseorchestrator.com"
 API_TOKEN = args.token.strip()
 DEVICES_ENDPOINT = 'services/targets/devices/'
+SDC_INDEX = args.sdcIndex or 0
 
 def cdo_query(url, method, body=None):
     query_url = CDO_ENDPOINT + '/aegis/rest/v1/' + url
@@ -86,7 +88,7 @@ def create_integration_device(device, public_key_pem, key_id):
 
 def main():
     proxy_response = cdo_query('services/targets/proxies', 'GET')
-    public_key = proxy_response[0]['larPublicKey']
+    public_key = proxy_response[SDC_INDEX]['larPublicKey']
     public_key_pem = base64.standard_b64decode(public_key['encodedKey'])
     key_id = public_key['keyId']
 

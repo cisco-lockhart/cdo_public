@@ -49,7 +49,7 @@ Environment should be properly set up now.
 
 By default, this script will execute in US production environment (https://defenseorchestrator.com). 
 
-To execute script in any other valid environment, the envorionment name must be passed in as a `--url` paramater string value. Examples of other valid environments include: 
+To execute script in any other valid environment, the environment name must be passed in as a `--url` paramater string value. Examples of other valid environments include: 
 - https://defenseorchestrator.eu
 - https://edge.apj.cdo.cisco.com
 
