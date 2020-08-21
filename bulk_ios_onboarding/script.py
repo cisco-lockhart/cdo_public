@@ -10,10 +10,11 @@ import polling
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-e', '--endpoint', type=str, help='the CDO endpoint name')
+parser.add_argument('-u', '--url', type=str, help='the CDO url to use')
+parser.add_argument('-t', '--token', type=str, help='the access token for CDO')
 args = parser.parse_args()
-CDO_ENDPOINT = args.endpoint or "https://defenseorchestrator.com"
-API_TOKEN = open("token.txt", "r").read()
+CDO_ENDPOINT = args.url or "https://defenseorchestrator.com"
+API_TOKEN = args.token.strip()
 
 def cdo_query(url, method, body=None):
     query_url = CDO_ENDPOINT + '/aegis/rest/v1/' + url

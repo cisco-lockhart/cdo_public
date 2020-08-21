@@ -5,7 +5,7 @@ To quickly onboard many IOS devices into a CDO environment.
 ## Step 1: Initialize Virtual Environment
 Before running, ensure you have Python3 and Pip
 - `python3 --version`
-- `pip --version` or `$pip3 --version`
+- `pip --version` or `pip3 --version`
 
 Install VirtualEnv to manage packages for script
 - `python3 -m pip install virtualenv`
@@ -34,16 +34,14 @@ Create a file in same directory as script called `devices.csv` that has the foll
 - all values will be read in as strings, should not supply double or single quotes
 - important to note this script only supports bulk onboarding of IOS devices
 
-## Step 3: Create Access Token File
-Create a file in same directory as script called `token.txt` that has your authentication token from CDO. You can either reuse a
-pre-existing token if you already know it, or refresh/create a new token. 
-- Ensure that there is no trailing whitespace or newline in this file
+## Step 3: Obtain Access Token
+If you already have/know your access token, then you can skip this next step.
 
 - To get refresh/create new token from CDO:
     - Log in to CDO
     - Navigate to settings page
     - Select `Create` or `Refresh` option
-    - A token should be newly generated in a text box. Copy that value and place it in the `token.txt` file. As
+    - A token should be newly generated in a text box. Copy that value as it will be used in the next step. As
     soon as you navigate away from this page, the token will be hidden. 
 
 # Running the Script
@@ -51,9 +49,9 @@ Environment should be properly set up now.
 
 By default, this script will execute in US production environment (https://defenseorchestrator.com). 
 
-To execute script in any other valid environment, the envorionment name must be passed in as a `--endpoint` paramater string value. Examples of other valid environments include: 
+To execute script in any other valid environment, the envorionment name must be passed in as a `--url` paramater string value. Examples of other valid environments include: 
 - https://defenseorchestrator.eu
 - https://edge.apj.cdo.cisco.com
 
-To run bulk onboarding script, run the following (can include optional endpoint parameter as well): 
-- `python3 script.py`
+To run bulk onboarding script, run the following: 
+- `python3 script.py -t <your token here> -u <optional cdo environment url>`
