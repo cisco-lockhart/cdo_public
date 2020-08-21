@@ -95,4 +95,5 @@ def main():
     [create_integration_device(device, public_key_pem, key_id) for device in devices_list]
     print("done")
 
+
 main()

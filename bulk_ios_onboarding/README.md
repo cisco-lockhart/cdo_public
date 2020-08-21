@@ -55,5 +55,5 @@ To execute script in any other valid environment, the envorionment name must be 
 - https://defenseorchestrator.eu
 - https://edge.apj.cdo.cisco.com
 
-To run bulk onboarding script run the following (can include optional endpoint parameter as well): 
+To run bulk onboarding script, run the following (can include optional endpoint parameter as well): 
 - `python3 script.py`
