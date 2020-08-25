@@ -31,7 +31,8 @@ Create a file in same directory as script called `devices.csv` that has the foll
 - each column represents a field: `name`, `host`, `port`, `username`, `password`, `enablePassword` respectively.
 - `enablePassword` field is optional and can be left blank
 - csv file should not include header row of column names
-- all values will be read in as strings, should not supply double or single quotes
+- all values will be read in as strings. No quotes are required. If a value contains a comma, you may supply double quotes surrounding the value.
+- see `devices.csv.sample` file as a reference example
 - important to note this script only supports bulk onboarding of IOS devices
 
 ## Step 3: Obtain Access Token
@@ -49,7 +50,9 @@ Environment should be properly set up now.
 
 By default, this script will execute in US production environment (https://defenseorchestrator.com). 
 
-To execute script in any other valid environment, the environment name must be passed in as a `--url` paramater string value. Examples of other valid environments include: 
+If there are multiple SDCs, you can choose which one to connect to using the `--sdcIndex` parameter. The index provided should be the same as the index it appears as in the Secure Connectors page in CDO. The default is the first SDC found. 
+
+To execute script in any other valid environment, the environment name must be passed in as a `--url` paramter string value. Examples of other valid environments include: 
 - https://defenseorchestrator.eu
 - https://edge.apj.cdo.cisco.com
 

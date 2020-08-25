@@ -25,9 +25,11 @@ def cdo_query(url, method, body=None):
     headers = {'Accept': 'application/json',
                'Content-type': 'application/json',
                'Authorization': auth}
-
-    req = requests.request(method, query_url, json=body, headers=headers)
-    return req.json()
+    try:
+      req = requests.request(method, query_url, json=body, headers=headers)
+      return req.json()
+    except:
+      print("Error: Could not make request to given url: " + query_url)
 
 
 def is_waiting_for_data(uid):
@@ -85,12 +87,14 @@ def create_integration_device(device, public_key_pem, key_id):
     print('Sending credentials to: %s' % name)
     return cdo_query(DEVICES_ENDPOINT + ios_device['uid'], 'PUT', update_data)
 
-
 def main():
     proxy_response = cdo_query('services/targets/proxies', 'GET')
-    public_key = proxy_response[SDC_INDEX]['larPublicKey']
-    public_key_pem = base64.standard_b64decode(public_key['encodedKey'])
-    key_id = public_key['keyId']
+    try: 
+      public_key = proxy_response[SDC_INDEX]['larPublicKey']
+      public_key_pem = base64.standard_b64decode(public_key['encodedKey'])
+      key_id = public_key['keyId']
+    except:
+      raise Exception("Could not find encoded key from proxy response");
 
     with open('devices.csv', 'r', encoding='utf-8') as f:
         reader = csv.reader(f)
