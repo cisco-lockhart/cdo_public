@@ -9,8 +9,8 @@ require('dotenv').config();
 const token = process.env.CDO_TOKEN;
 
 function encryptCredentials(publicKey, username, password, additionalCredentials, isApiToken = false) {
-  var key = forge.util.decode64(publicKey.encodedKey);
-  var credentials = {
+  const key = forge.util.decode64(publicKey.encodedKey);
+  let credentials = {
     keyId: publicKey.keyId,
     username: isApiToken ? null : encryptCredentialInner(key, username || ''),
     password: encryptCredentialInner(key, password || '')
@@ -33,9 +33,9 @@ function encryptCredentials(publicKey, username, password, additionalCredentials
 
 function encryptRSA(publicKeyPem, plaintext) {
   if(_.isString(publicKeyPem) && _.isString(plaintext)) {
-    var buffer = forge.util.createBuffer(plaintext, 'utf8');
-    var publicKey = forge.pki.publicKeyFromPem(publicKeyPem);
-    var encryptedBytes = publicKey.encrypt(buffer.getBytes());
+    let buffer = forge.util.createBuffer(plaintext, 'utf8');
+    let publicKey = forge.pki.publicKeyFromPem(publicKeyPem);
+    let encryptedBytes = publicKey.encrypt(buffer.getBytes());
     return forge.util.encode64(encryptedBytes);
   } else {
     throw new Error('Input publicKeyPem and plaintext must be strings');
@@ -52,8 +52,8 @@ function main() {
     deviceType: "ASA"
   };
 
-  let username = process.env.ASA_USER;
-  let password = process.env.ASA_PASSWORD;
+  const username = process.env.ASA_USER;
+  const password = process.env.ASA_PASSWORD;
   return postDevice(device)
     .then(device => getDeviceConfigId(device))
     .then((config) => {
