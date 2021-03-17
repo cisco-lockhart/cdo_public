@@ -46,7 +46,7 @@ function main() {
   logger.level = process.env.LOG_LEVEL;
   const device = {
     ipv4: process.env.ASA_HOST,
-    port: 443,
+    port: process.env.ASA_PORT,
     model: false,
     name: process.env.ASA_NAME,
     deviceType: "ASA"
