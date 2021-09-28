@@ -7,6 +7,7 @@ const logger = require('log4js').getLogger('main');
 require('dotenv').config();
 
 const token = process.env.CDO_TOKEN;
+const ignoreCertificate = process.env.IGNORE_CERT === 'true' || false;
 
 function encryptCredentials(publicKey, username, password, additionalCredentials, isApiToken = false) {
   const key = forge.util.decode64(publicKey.encodedKey);
@@ -49,7 +50,8 @@ function main() {
     port: process.env.ASA_PORT,
     model: false,
     name: process.env.ASA_NAME,
-    deviceType: "ASA"
+    deviceType: "ASA",
+    ignoreCertificate
   };
 
   const username = process.env.ASA_USER;
