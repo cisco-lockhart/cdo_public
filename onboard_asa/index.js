@@ -55,8 +55,15 @@ function main() {
   };
 
   const username = process.env.ASA_USER;
-  const password = process.env.ASA_PASSWORD;
-  return postDevice(device)
+  const password = process.env.ASA_PASSWORD
+  return getProxy()
+    .then(lar => {
+      device['larUid'] = lar['uid']
+      return device;
+    })
+    .then(updatedDevice => {
+      return postDevice(updatedDevice);
+    })
     .then(device => getDeviceConfigId(device))
     .then((config) => {
       logger.trace("Config", JSON.stringify(config));
@@ -75,13 +82,19 @@ function main() {
     });
 }
 
-function getProxyPublicKey() {
+function getProxy() {
+  const index = 0;
   const url = getUrl("aegis/rest/v1/services/targets/proxies");
   return requestAsync({uri: url, headers: {'Authorization': `Bearer ${token}`}})
     .then((resp) => {
       const lars = JSON.parse(resp.body);
-      return lars[0].larPublicKey;
-  })
+      return lars[index];
+    });
+}
+
+function getProxyPublicKey() {
+  return getProxy()
+    .then(lar => lar.larPublicKey);
 }
 
 function postDevice(devicePayload) {
