@@ -7,6 +7,8 @@ const logger = require('log4js').getLogger('main');
 require('dotenv').config();
 
 const token = process.env.CDO_TOKEN;
+const ignoreCertificate = process.env.IGNORE_CERT === 'true' || false;
+const sdcName = process.env.SDC_NAME;
 
 function encryptCredentials(publicKey, username, password, additionalCredentials, isApiToken = false) {
   const key = forge.util.decode64(publicKey.encodedKey);
@@ -49,12 +51,21 @@ function main() {
     port: process.env.ASA_PORT,
     model: false,
     name: process.env.ASA_NAME,
-    deviceType: "ASA"
+    deviceType: "ASA",
+    ignoreCertificate
   };
 
   const username = process.env.ASA_USER;
-  const password = process.env.ASA_PASSWORD;
-  return postDevice(device)
+  const password = process.env.ASA_PASSWORD
+  return getProxy()
+    .then(lar => {
+      logger.trace("Found lar: ", lar.name);
+      device['larUid'] = lar['uid']
+      return device;
+    })
+    .then(updatedDevice => {
+      return postDevice(updatedDevice);
+    })
     .then(device => getDeviceConfigId(device))
     .then((config) => {
       logger.trace("Config", JSON.stringify(config));
@@ -73,13 +84,30 @@ function main() {
     });
 }
 
-function getProxyPublicKey() {
+function filterByDefault(lar) {
+  return lar.defaultLar;
+}
+
+function filterByName(lar) {
+  return lar.name === sdcName;
+}
+
+function getProxy() {
   const url = getUrl("aegis/rest/v1/services/targets/proxies");
   return requestAsync({uri: url, headers: {'Authorization': `Bearer ${token}`}})
     .then((resp) => {
       const lars = JSON.parse(resp.body);
-      return lars[0].larPublicKey;
-  })
+      let filter = filterByDefault;
+      if (!!sdcName) {
+        filter = filterByName;
+      }
+      return _.find(lars, filter);
+    });
+}
+
+function getProxyPublicKey() {
+  return getProxy()
+    .then(lar => lar.larPublicKey);
 }
 
 function postDevice(devicePayload) {
@@ -129,4 +157,10 @@ function getUrl(url) {
   return base_url + url;
 }
 
-main();
+(async () => {
+  await main();
+  logger.info("Done");
+})().catch(e => {
+  // Deal with the fact the chain failed
+  logger.error("Failed", e);
+});
