@@ -131,4 +131,10 @@ function getUrl(url) {
   return base_url + url;
 }
 
-main();
+(async () => {
+  await main();
+  logger.info("Done");
+})().catch(e => {
+  // Deal with the fact the chain failed
+  logger.error("Failed", e);
+});
