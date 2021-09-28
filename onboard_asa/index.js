@@ -59,6 +59,7 @@ function main() {
   const password = process.env.ASA_PASSWORD
   return getProxy()
     .then(lar => {
+      logger.trace("Found lar: ", lar.name);
       device['larUid'] = lar['uid']
       return device;
     })
@@ -87,13 +88,21 @@ function filterByDefault(lar) {
   return lar.defaultLar;
 }
 
+function filterByName(lar) {
+  return lar.name === sdcName;
+}
+
 function getProxy() {
   const index = 0;
   const url = getUrl("aegis/rest/v1/services/targets/proxies");
   return requestAsync({uri: url, headers: {'Authorization': `Bearer ${token}`}})
     .then((resp) => {
       const lars = JSON.parse(resp.body);
-      return _.find(lars, filterByDefault);
+      let filter = filterByDefault;
+      if (!!sdcName) {
+        filter = filterByName;
+      }
+      return _.find(lars, filter);
     });
 }
 
