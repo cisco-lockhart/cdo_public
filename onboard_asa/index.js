@@ -8,6 +8,7 @@ require('dotenv').config();
 
 const token = process.env.CDO_TOKEN;
 const ignoreCertificate = process.env.IGNORE_CERT === 'true' || false;
+const sdcName = process.env.SDC_NAME;
 
 function encryptCredentials(publicKey, username, password, additionalCredentials, isApiToken = false) {
   const key = forge.util.decode64(publicKey.encodedKey);
@@ -82,13 +83,17 @@ function main() {
     });
 }
 
+function filterByDefault(lar) {
+  return lar.defaultLar;
+}
+
 function getProxy() {
   const index = 0;
   const url = getUrl("aegis/rest/v1/services/targets/proxies");
   return requestAsync({uri: url, headers: {'Authorization': `Bearer ${token}`}})
     .then((resp) => {
       const lars = JSON.parse(resp.body);
-      return lars[index];
+      return _.find(lars, filterByDefault);
     });
 }
 
