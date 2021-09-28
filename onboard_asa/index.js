@@ -93,7 +93,6 @@ function filterByName(lar) {
 }
 
 function getProxy() {
-  const index = 0;
   const url = getUrl("aegis/rest/v1/services/targets/proxies");
   return requestAsync({uri: url, headers: {'Authorization': `Bearer ${token}`}})
     .then((resp) => {
