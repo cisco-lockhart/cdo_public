@@ -1,5 +1,10 @@
 # get the device UID
 ```
+TOKEN=xxxyyyzzz.xxxyyyzzz
+```
+
+# get the device UID
+```
 curl "https://www.defenseorchestrator.com/aegis/rest/v1/services/targets/devices?q=name:Hollis*" -H "Authorization: Bearer $TOKEN" | jq -r '.[].uid'
 ```
 
@@ -12,8 +17,10 @@ curl "https://www.defenseorchestrator.com/aegis/rest/v1/services/targets/devices
 curl "https://www.defenseorchestrator.com/aegis/rest/v1/services/ftd/summaries?q=deviceUid:ddff93a2-9069-46da-8d26-82f26a420821" -H "Authorization: Bearer $TOKEN" | jq 
 ```
 # get the rules of that configuration
-```curl "https://www.defenseorchestrator.com/aegis/rest/v1/services/targets/firewallrules?q=configurationUid:375657bd-da7f-4393-8c0b-9a6cd631572c" -H "Authorization: Bearer $TOKEN" | jq -r '.[].name'
 ```
+curl "https://www.defenseorchestrator.com/aegis/rest/v1/services/targets/firewallrules?q=configurationUid:375657bd-da7f-4393-8c0b-9a6cd631572c" -H "Authorization: Bearer $TOKEN" | jq -r '.[].name'
+```
+
 # add a rule
 ```
 curl -X POST "https://www.defenseorchestrator.com/aegis/rest/v1/services/targets/firewallrules" -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' -d '
@@ -89,5 +96,4 @@ curl -X POST "https://www.defenseorchestrator.com/aegis/rest/v1/services/targets
 ```
 curl -X DELETE "https://www.defenseorchestrator.com/aegis/rest/v1/services/targets/firewallrules/d67768dc-1aef-43c2-87b2-9753b29e867c" -H "Authorization: Bearer $TOKEN" 
 ```
-
 
