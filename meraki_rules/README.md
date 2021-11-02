@@ -7,7 +7,7 @@ curl "https://www.defenseorchestrator.com/aegis/rest/v1/services/targets/devices
 ```
 curl "https://www.defenseorchestrator.com/aegis/rest/v1/services/targets/devices/ddff93a2-9069-46da-8d26-82f26a420821/summaries" -H "Authorization: Bearer $TOKEN" | jq
 ```
-# or
+## or
 ```
 curl "https://www.defenseorchestrator.com/aegis/rest/v1/services/ftd/summaries?q=deviceUid:ddff93a2-9069-46da-8d26-82f26a420821" -H "Authorization: Bearer $TOKEN" | jq 
 ```
