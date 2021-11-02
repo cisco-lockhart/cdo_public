@@ -1,4 +1,4 @@
-# get the device UID
+# set the token environment variable
 ```
 TOKEN=xxxyyyzzz.xxxyyyzzz
 ```
