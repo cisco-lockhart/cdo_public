@@ -98,6 +98,13 @@ def create_integration_device(device, public_key_pem, key_id):
     return cdo_query(DEVICES_ENDPOINT + ios_device['uid'], 'PUT', update_data)
 
 def main():
+    print(colored("Reading devices data...", "yellow"))
+    with open('assets/devices.csv', 'r', encoding='utf-8') as f:
+      reader = csv.reader(f)
+      devices_list = list(reader)
+
+    print(colored("Successfully read devices data!", "red"))
+
     proxy_response = cdo_query('services/targets/proxies', 'GET')
     if not proxy_response:
       print(colored("Did not receive response with SDCs", 'red'))
@@ -112,10 +119,6 @@ def main():
       key_id = public_key['keyId']
     except:
       raise Exception("Could not find encoded key from proxy response");
-
-    with open('devices.csv', 'r', encoding='utf-8') as f:
-        reader = csv.reader(f)
-        devices_list = list(reader)
 
     [create_integration_device(device, public_key_pem, key_id) for device in devices_list]
     print(colored("Done!", 'green'))
