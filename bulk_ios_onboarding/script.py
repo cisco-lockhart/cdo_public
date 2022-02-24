@@ -26,7 +26,7 @@ if use_default_sdc == "yes" or use_default_sdc == "y" or use_default_sdc == "":
   print("Using the first SDC in list to connect to device.")
   sdc_index = 0
 else:
-  sdc_index = input(colored("Enter the index of the SDC to connect to the device: ", 'cyan'))
+  sdc_index = int(input(colored("Enter the index of the SDC to connect to the device: ", 'cyan')))
 
 
 def cdo_query(url, method, body=None):
@@ -109,7 +109,7 @@ def main():
     if not proxy_response:
       print(colored("Did not receive response with SDCs", 'red'))
       quit()
-    elif not proxy_response[int(sdc_index)]:
+    elif not proxy_response[sdc_index]:
       print(colored("Did not find an SDC at given index: " + sdc_index, 'red'))
       quit()
       
