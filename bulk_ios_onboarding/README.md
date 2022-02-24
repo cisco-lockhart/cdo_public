@@ -6,7 +6,7 @@ To quickly onboard many IOS devices into a CDO environment.
 2. Export the image to a tar file `docker save bulk_ios_onboarding_app > bulk_ios_onboarding_app.tar`
 
 # To use a pre-created image (customer)
-1. Ensure that you have docker desktop installed. If you do not, see here how you can install it https://docs.docker.com/desktop/
+1. Ensure that you have docker desktop installed. If you do not, see here how you can install it https://www.docker.com/products/docker-desktop
 2. Load the app from your terminal using the following command (note, you must be in the bulk_ios_onboarding directory when you run this command)
 ```
 docker load < bulk_ios_onboarding_app.tar
