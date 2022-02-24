@@ -21,7 +21,7 @@ if use_default_url == "yes" or use_default_url == "y" or use_default_url == "":
 else:
   cdo_url = input("Enter the url to use for CDO: ")
 
-use_default_sdc = input(colored("Use the default SDC to connect to device? [y] ", 'cyan'))
+use_default_sdc = input(colored("Use the first listed SDC to connect to device? [y] ", 'cyan'))
 if use_default_sdc == "yes" or use_default_sdc == "y" or use_default_sdc == "":
   print("Using the first SDC in list to connect to device.")
   sdc_index = 0
