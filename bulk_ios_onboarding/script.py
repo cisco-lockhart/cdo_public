@@ -26,7 +26,7 @@ if use_default_sdc == "yes" or use_default_sdc == "y" or use_default_sdc == "":
   print("Using the first SDC in list to connect to device.")
   sdc_index = 0
 else:
-  sdc_index = input(colored("Enter the index of the SDC to connect to the device: ", 'cyan'))
+  sdc_index = int(input(colored("Enter the index of the SDC to connect to the device: ", 'cyan')))
 
 
 def cdo_query(url, method, body=None):
