@@ -1,0 +1,5 @@
+requests
+pybase64
+pycryptodome
+polling
+termcolor

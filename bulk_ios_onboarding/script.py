@@ -8,20 +8,30 @@ from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_v1_5
 import polling
 import argparse
+from termcolor import colored
 
-parser = argparse.ArgumentParser()
-parser.add_argument('-u', '--url', type=str, help='the CDO url to use')
-parser.add_argument('-t', '--token', type=str, help='the access token for CDO')
-parser.add_argument('-s', '--sdcIndex', type=int, help='the index of the sdc to use based on response from lar proxy')
-args = parser.parse_args()
-CDO_ENDPOINT = args.url or "https://defenseorchestrator.com"
-API_TOKEN = args.token.strip()
 DEVICES_ENDPOINT = 'services/targets/devices/'
-SDC_INDEX = args.sdcIndex or 0
+
+token = input(colored("Enter your access token for CDO: ", 'cyan'))
+
+use_default_url = input(colored("Use default https://defenseorchestrator.com url? [y] ", 'cyan'))
+if use_default_url == "yes" or use_default_url == "y" or use_default_url == "":
+  print("Using default url.")
+  cdo_url = "https://defenseorchestrator.com"
+else:
+  cdo_url = input("Enter the url to use for CDO: ")
+
+use_default_sdc = input(colored("Use the first listed SDC to connect to device? [y] ", 'cyan'))
+if use_default_sdc == "yes" or use_default_sdc == "y" or use_default_sdc == "":
+  print("Using the first SDC in list to connect to device.")
+  sdc_index = 0
+else:
+  sdc_index = input(colored("Enter the index of the SDC to connect to the device: ", 'cyan'))
+
 
 def cdo_query(url, method, body=None):
-    query_url = CDO_ENDPOINT + '/aegis/rest/v1/' + url
-    auth = "Bearer " + API_TOKEN
+    query_url = cdo_url + '/aegis/rest/v1/' + url
+    auth = "Bearer " + token
     headers = {'Accept': 'application/json',
                'Content-type': 'application/json',
                'Authorization': auth}
@@ -29,7 +39,7 @@ def cdo_query(url, method, body=None):
       req = requests.request(method, query_url, json=body, headers=headers)
       return req.json()
     except:
-      print("Error: Could not make request to given url: " + query_url)
+      print(colored("Error: Could not make request to given url: " + query_url, 'red'))
 
 
 def is_waiting_for_data(uid):
@@ -47,7 +57,7 @@ def encrypt_credential(public_key_pem, plain_text):
 
 def create_integration_device(device, public_key_pem, key_id):
     name, host, port, username, password, enable_password = [device[i] for i in range(len(device))]
-    print('Creating device: %s' % name)
+    print(colored('Creating device: %s' % name, 'yellow'))
 
     ipv4 = "%s:%s" % (host, port)
     post_body = {
@@ -63,9 +73,9 @@ def create_integration_device(device, public_key_pem, key_id):
     try:
         polling.poll(lambda: is_waiting_for_data(ios_device['uid']), step=.25, timeout=60)
     except KeyError:
-        return print('Failed to create device: %s' % name)
+        return print(colored('Failed to create device: %s' % name, 'red'))
     except polling.TimeoutException:
-        return print('Device never readied to receive credentials: %s' % name)
+        return print(colored('Device never readied to receive credentials: %s' % name, 'red'))
 
     encrypted_username = encrypt_credential(public_key_pem, username)
     encrypted_password = encrypt_credential(public_key_pem, password)
@@ -84,24 +94,34 @@ def create_integration_device(device, public_key_pem, key_id):
         }
     }
 
-    print('Sending credentials to: %s' % name)
+    print(colored('Sending credentials to: %s' % name, 'yellow'))
     return cdo_query(DEVICES_ENDPOINT + ios_device['uid'], 'PUT', update_data)
 
 def main():
+    print(colored("Reading devices data...", "yellow"))
+    with open('assets/devices.csv', 'r', encoding='utf-8') as f:
+      reader = csv.reader(f)
+      devices_list = list(reader)
+
+    print(colored("Successfully read devices data!", "red"))
+
     proxy_response = cdo_query('services/targets/proxies', 'GET')
+    if not proxy_response:
+      print(colored("Did not receive response with SDCs", 'red'))
+      quit()
+    elif not proxy_response[sdc_index]:
+      print(colored("Did not find an SDC at given index: " + sdc_index, 'red'))
+      quit()
+      
     try: 
-      public_key = proxy_response[SDC_INDEX]['larPublicKey']
+      public_key = proxy_response[sdc_index]['larPublicKey']
       public_key_pem = base64.standard_b64decode(public_key['encodedKey'])
       key_id = public_key['keyId']
     except:
       raise Exception("Could not find encoded key from proxy response");
 
-    with open('devices.csv', 'r', encoding='utf-8') as f:
-        reader = csv.reader(f)
-        devices_list = list(reader)
-
     [create_integration_device(device, public_key_pem, key_id) for device in devices_list]
-    print("done")
+    print(colored("Done!", 'green'))
 
 
 main()
