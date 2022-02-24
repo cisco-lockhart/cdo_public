@@ -109,7 +109,7 @@ def main():
     if not proxy_response:
       print(colored("Did not receive response with SDCs", 'red'))
       quit()
-    elif not proxy_response[sdc_index]:
+    elif not proxy_response[int(sdc_index)]:
       print(colored("Did not find an SDC at given index: " + sdc_index, 'red'))
       quit()
       
