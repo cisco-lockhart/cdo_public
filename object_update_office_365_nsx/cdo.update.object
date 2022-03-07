@@ -10,8 +10,8 @@ fail () { log "$@"; exit 1; }
 which -s jq || fail "jq must be installed"
 which -s diff || fail "diff must be installed"
 [ ${OAUTH} ] || fail "You must specify OAuth token in the \$OAUTH system variable"
-[ ${1} ] || fail "${0} <object name> <input file name>"
-[ ${2} ] || fail "${0} <object name> <input file name>"
+[ ${1} ] || fail "${0} <object name> <input file name> [deploy]"
+[ ${2} ] || fail "${0} <object name> <input file name> [deploy]"
 [ -f ${2} ] || fail "input file not found: ${2}"
  
 # validate OAUTH token
@@ -60,19 +60,21 @@ sleep 5
 
 curl -s -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${OBJECT_READ_URL}" | jq -r '.references[].uid' > device.uids
 
-# Initialize the job to no devices
-JOB=$(<job.template)
+if [ ${3} ] && [ ${3} = 'deploy' ]; then
 
-# add device uids to job
-while read LINE
-do
-  JOB=$(echo "${JOB}" | jq -c --arg DEVICE_UID ${LINE} '.objRefs |= . + [ {"uid": $DEVICE_UID,"namespace": "targets", "type": "devices"} ] ')
-done < device.uids
+  # Initialize the job to no devices
+  JOB=$(<job.template)
 
-echo ${JOB} > body.json
+  # add device uids to job
+  while read LINE
+  do
+    JOB=$(echo "${JOB}" | jq -c --arg DEVICE_UID ${LINE} '.objRefs |= . + [ {"uid": $DEVICE_UID,"namespace": "targets", "type": "devices"} ] ')
+  done < device.uids
 
-JOB_URL="${API_URL}/state-machines/jobs"
-cat body.json
-curl -s -o output.txt -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X POST --data @body.json "${JOB_URL}" || fail "Could not create job"
+  echo ${JOB} > body.json
 
+  JOB_URL="${API_URL}/state-machines/jobs"
+  cat body.json
+  curl -s -o output.txt -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X POST --data @body.json "${JOB_URL}" || fail "Could not create job"
 
+fi

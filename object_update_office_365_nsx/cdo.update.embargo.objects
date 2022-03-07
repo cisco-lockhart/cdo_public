@@ -1,0 +1,11 @@
+#!/bin/sh -x
+
+export OAUTH=xxx
+
+while true
+do
+date
+curl -s -f -k -H "Authorization: Basic <nsx auth>" -H 'Content-Type: application/json' https://<nsx server>/api/v1/ns-groups/<uid>/effective-virtual-machine-members | jq -r '.results[].source.target_display_name+"/32"' | sort | uniq > nsx.ip
+bash cdo.update.object Web-Servers nsx.ip
+sleep 1
+done
