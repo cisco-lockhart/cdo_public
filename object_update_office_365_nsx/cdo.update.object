@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh
 
 #Usage:
 #export OAUTH=my_API_token
@@ -54,15 +54,15 @@ echo "{\"contents\" : [ ${CONTENTS} ]}" > body.json
 # save the object
 curl -s -o output.txt -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X PUT --data @body.json "${OBJECT_URL}/${OBJECT_UID}" || fail "Could not update \"${OBJECT_NAME}\" object"
 
-# Creating a job to update all affected devices!
-sleep 5
-
-curl -s -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${OBJECT_READ_URL}" | jq -r '.references[].uid' > device.uids
-
 # Deploy - if requested
 if [ ${3} ] && [ ${3} = 'deploy' ]; then
 
-  # Initialize the job to no devices
+  # Creating a job to update all affected devices!
+  sleep 5
+
+  curl -s -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${OBJECT_READ_URL}" | jq -r '.references[].uid' > device.uids
+
+  # Initialize the job to template
   JOB=$(<job.template)
 
   # add device uids to job
