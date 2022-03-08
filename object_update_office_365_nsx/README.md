@@ -15,6 +15,10 @@ bash cdo.update.object O365 o365.ip [deploy]
 ```
 Provide "deploy" as he thrid parameter there if you like the changed the script makes to be deployed to the device. If not provided, changes will be staged in CDO, to be reviewed and deployed by a user. 
 
+## Sanctions/Embargo countries IP blocking
+Cisco's repo of countries IP ranges: https://wwwin-github.cisco.com/Cisco-Sanctions-Response/regionaladdresslists
+Script `cdo.update.embargo.objects` takes the `belarus_blocks_ipv4.ip` IPs and pushes them into a shared object group..
+
 ## Integration with VMware NSX: automatic update of ASAs object with ever-changing list of VMs in NSX
 
 Customer has an NSX env, servers are coming up and down all the time, need to udpate ASA policy to include/exclude these servers.
