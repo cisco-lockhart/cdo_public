@@ -1,11 +1,7 @@
 #!/bin/sh -x
 
-export OAUTH=xxx
+export OAUTH=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXIiOiIwIiwic2NvcGUiOlsidHJ1c3QiLCI0YWQzNTE1MS1hOWZhLTRlOTktOTgwZS1iMTUxM2VkM2NmODEiLCJyZWFkIiwid3JpdGUiXSwiYW1yIjoic2FtbCIsInJvbGVzIjpbIlJPTEVfU1VQRVJfQURNSU4iXSwiaXNzIjoiaXRkIiwiY2x1c3RlcklkIjoiMSIsImlkIjoiY2JiM2I3NWUtYmI2ZC00ZTI0LTg2OGMtZjFmMzVlMDI2ZWVlIiwic3ViamVjdFR5cGUiOiJ1c2VyIiwianRpIjoiMTM5N2IzZjgtOGIwYi00ZDVhLTgwMjYtYjJkMmZjNmMzOGVkIiwicGFyZW50SWQiOiI0YWQzNTE1MS1hOWZhLTRlOTktOTgwZS1iMTUxM2VkM2NmODEiLCJjbGllbnRfaWQiOiJhcGktY2xpZW50In0.xPqkOT9HFMjeX1RXyqvKfzQIM1bfkgVF_AXfXZ3cV8j1oP0e6sO4qEaVwU4cWNNJZDBdwQcdGbZVOJMKpn9zawji7ShOliLDbfuDdO4vXmN_xgfLnW8XELSnxPx_5b6_rpuolZ9TcYLqaqKJmceDj5o-wiKBXdu2b0Vj_T25inS0TLY14m3Jq8-g3VXV5zReL1N_FnroKs9xbYy3yvevIuVGAfROLXDoCsnzRsBSdcGzIN_P6pnHlOu_dMTEVjnZnIhbtAv8WeCpSnQuD2wkvZcNRJ35oB4mmw7LR0vLGUW8XpFmkhYLfKHwvbQ9t-mgDtMiTu_knv5ZD89IPo5aBg
 
-while true
-do
 date
-curl -s -f -k -H "Authorization: Basic <nsx auth>" -H 'Content-Type: application/json' https://<nsx server>/api/v1/ns-groups/<uid>/effective-virtual-machine-members | jq -r '.results[].source.target_display_name+"/32"' | sort | uniq > nsx.ip
-bash cdo.update.object Web-Servers nsx.ip
-sleep 1
-done
+curl -s https://wwwin-github.cisco.com/raw/Cisco-Sanctions-Response/regionaladdresslists/master/belarus_blocks_ipv4.txt | sort -u > belarus_blocks_ipv4.ip
+bash cdo.update.object SANCTIONS_BLOCK_IP belarus_blocks_ipv4.ip

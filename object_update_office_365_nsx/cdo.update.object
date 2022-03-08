@@ -36,23 +36,22 @@ if [ -z "${DIFF}" ]; then
     exit 0
 fi
 
-echo DIFF $DIFF
-
 echo "Updating..."
 
-# Initialize the object to no contents
-OBJECT="{ \"contents\" : [] }"
- 
 # add IP addresses to object
+CONTENTS=""
 while read LINE
 do
-  OBJECT=$(echo "${OBJECT}" | jq -c --arg IP ${LINE} '.contents |= . + [ { "@type": "NetworkContent", "sourceElement": $IP, "destinationElement": null, "wildcardMaskElement": null } ] ')
+  # that was wicked slow....
+  # OBJECT=$(echo "${OBJECT}" | jq -c --arg IP ${LINE} '.contents |= . + [ { "@type": "NetworkContent", "sourceElement": $IP, "destinationElement": null, "wildcardMaskElement": null } ] ')
+  CONTENTS+=",{ \"@type\": \"NetworkContent\", \"sourceElement\": \"${LINE}\", \"destinationElement\": null, \"wildcardMaskElement\": null }"
 done < "${IN_FILE_NAME}"
- 
-echo ${OBJECT} > body.json
- 
+ # remove the first ","
+CONTENTS="${CONTENTS:1}"
+
+echo "{\"contents\" : [ ${CONTENTS} ]}" > body.json
+
 # save the object
-cat body.json
 curl -s -o output.txt -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X PUT --data @body.json "${OBJECT_URL}/${OBJECT_UID}" || fail "Could not update \"${OBJECT_NAME}\" object"
 
 # Creating a job to update all affected devices!
@@ -60,6 +59,7 @@ sleep 5
 
 curl -s -f -H "Content-Type: application/json" -H "Authorization: bearer ${OAUTH}" -X GET "${OBJECT_READ_URL}" | jq -r '.references[].uid' > device.uids
 
+# Deploy - if requested
 if [ ${3} ] && [ ${3} = 'deploy' ]; then
 
   # Initialize the job to no devices
