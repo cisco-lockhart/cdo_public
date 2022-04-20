@@ -21,12 +21,7 @@ if use_default_url == "yes" or use_default_url == "y" or use_default_url == "":
 else:
   cdo_url = input("Enter the url to use for CDO: ")
 
-use_default_sdc = input(colored("Use the first listed SDC to connect to device? [y] ", 'cyan'))
-if use_default_sdc == "yes" or use_default_sdc == "y" or use_default_sdc == "":
-  print("Using the first SDC in list to connect to device.")
-  sdc_index = 0
-else:
-  sdc_index = int(input(colored("Enter the index of the SDC to connect to the device: ", 'cyan')))
+sdc_name = input(colored("Enter the name of the SDC to use: ", 'cyan'))
 
 
 def cdo_query(url, method, body=None):
@@ -109,12 +104,14 @@ def main():
     if not proxy_response:
       print(colored("Did not receive response with SDCs", 'red'))
       quit()
-    elif not proxy_response[sdc_index]:
-      print(colored("Did not find an SDC at given index: " + sdc_index, 'red'))
+    
+    selectedProxy = filter(lambda proxy: (proxy.name == sdc_name), proxy_response)
+    if not selectedProxy:
+      print(colored("Did not find an SDC at with given name: " + sdc_name, 'red'))
       quit()
       
     try: 
-      public_key = proxy_response[sdc_index]['larPublicKey']
+      public_key = selectedProxy['larPublicKey']
       public_key_pem = base64.standard_b64decode(public_key['encodedKey'])
       key_id = public_key['keyId']
     except:

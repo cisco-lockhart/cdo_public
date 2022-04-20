@@ -18,6 +18,7 @@ docker run -v <absolute_file_path_to_folder_containing_csv_here>:/bulk_ios_onboa
 ```
 Be sure to provide the absolute path to the folder containing the csv. For instance if you create a file called `devices.csv` that lives in `~/workspace/cdo/devices.csv`, you will want your argument to look like this `-v ~/workspace/cdo/:/bulk_ios_onboarding/assets`. 
 5. Respond to the prompts and supervise the onboarding progress. 
+  a) note, when asked to supply the SDC name, navigate to the /sdc page in the ui. From there you can see the names of all of your Secure Device Connectors. You may pick the SDC that you want to connect to your devices with. It is recommended to use the "On-Prem" sdc. 
 
 ## Creating Device Info File
 Create a file that has the following format:
