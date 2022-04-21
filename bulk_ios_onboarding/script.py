@@ -106,7 +106,7 @@ def main():
       print(colored("Did not receive response with SDCs", 'red'))
       quit()
     
-    selectedProxy = filter(lambda proxy: (proxy.name == sdc_name), proxy_response)
+    selectedProxy = next(filter(lambda proxy: (proxy['name'] == sdc_name), proxy_response))
     if not selectedProxy:
       print(colored("Did not find an SDC at with given name: " + sdc_name, 'red'))
       quit()
