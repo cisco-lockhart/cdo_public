@@ -19,7 +19,7 @@ if use_default_url == "yes" or use_default_url == "y" or use_default_url == "":
 else:
   cdo_url = input("Enter the url to use for CDO: ")
 
-sdc_name = input(colored("Enter the name of the SDC to use: ", 'cyan'))
+sdc_ip = input(colored("Enter the ip of the SDC to use: ", 'cyan'))
 
 print(colored("Reading CDO token...", 'yellow'))
 token = open('assets/token.txt', 'r').read().strip()
@@ -106,9 +106,9 @@ def main():
       print(colored("Did not receive response with SDCs", 'red'))
       quit()
     
-    selectedProxy = next(filter(lambda proxy: (proxy['name'] == sdc_name), proxy_response))
+    selectedProxy = next(filter(lambda proxy: (proxy['ipAddress'] == sdc_ip), proxy_response))
     if not selectedProxy:
-      print(colored("Did not find an SDC at with given name: " + sdc_name, 'red'))
+      print(colored("Did not find an SDC at with given ip: " + sdc_ip, 'red'))
       quit()
       
     try: 
