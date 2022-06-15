@@ -1,4 +1,4 @@
-# Onbaord ASA to CDO via SecureX
+# Onbaord FTD to CDO via SecureX
 
 This workflow will take some basic import parameters and add the given FTD to your CDO tenant and cloud delivered Firewall Management Center.
 
