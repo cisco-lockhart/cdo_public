@@ -1,80 +1,11 @@
 {
   "workflow": {
     "unique_name": "definition_workflow_01XA9YONXBUFF1Ba3sx8oRknTP364C2Jvzo",
-    "name": "Onboard FTD",
-    "title": "Onboard FTD",
+    "name": "Onboard FTD into CDO and FMC",
+    "title": "Onboard FTD into CDO and FMC",
     "type": "generic.workflow",
     "base_type": "workflow",
     "variables": [
-      {
-        "schema_id": "datatype.string",
-        "properties": {
-          "value": "Default Access Control Policy",
-          "scope": "input",
-          "name": "policy",
-          "type": "datatype.string",
-          "description": "Policy to apply to the newly onboarded device",
-          "is_required": false,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_01XB6OX2VFTRR3tKUlVzGGsC6heiU5Am3Yu",
-        "object_type": "variable_workflow"
-      },
-      {
-        "schema_id": "datatype.string",
-        "properties": {
-          "value": "",
-          "scope": "local",
-          "name": "temp",
-          "type": "datatype.string",
-          "is_required": false,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_01XAJEVBYWAKG3suS69lI6HLhCJQ3iBmAOS",
-        "object_type": "variable_workflow"
-      },
-      {
-        "schema_id": "datatype.string",
-        "properties": {
-          "value": "",
-          "scope": "local",
-          "name": "empty_string",
-          "type": "datatype.string",
-          "description": "An empty string to use for comparions operators",
-          "is_required": false,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_01XABIGBGXU0I0OZnXFeQlnbSSRdWDnpsXx",
-        "object_type": "variable_workflow"
-      },
-      {
-        "schema_id": "datatype.boolean",
-        "properties": {
-          "value": false,
-          "scope": "input",
-          "name": "is_threat",
-          "type": "datatype.boolean",
-          "description": "true if threat license required",
-          "is_required": false,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_01XAC548W8C4B1sgysGDY1qTML6oQSuWs37",
-        "object_type": "variable_workflow"
-      },
-      {
-        "schema_id": "datatype.string",
-        "properties": {
-          "value": "",
-          "scope": "input",
-          "name": "performance_tier",
-          "type": "datatype.string",
-          "description": "For virtual devices, specify the performance tier. Leave empty for physical devices.\nFTDv5\nFTDv10\nFTDv20\nFTDv30\nFTDv50\nFTDv100\nFTDv (For variable)",
-          "is_required": false,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_01XABV18JRVWD19ARjZKy1UtbAjaO2vegt2",
-        "object_type": "variable_workflow"
-      },
       {
         "schema_id": "datatype.boolean",
         "properties": {
@@ -87,34 +18,6 @@
           "is_invisible": false
         },
         "unique_name": "variable_workflow_01XAC5D2DKXTY11qKtKjnLdRAQ8LodIpbMF",
-        "object_type": "variable_workflow"
-      },
-      {
-        "schema_id": "datatype.secure_string",
-        "properties": {
-          "value": "",
-          "scope": "input",
-          "name": "cdo_api_key",
-          "type": "datatype.secure_string",
-          "description": "Stores the API key used throughout the workflow",
-          "is_required": false,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_01XAAXLIRLPVJ0TssYtnsDpF4TASIXfrmEV",
-        "object_type": "variable_workflow"
-      },
-      {
-        "schema_id": "datatype.string",
-        "properties": {
-          "value": "",
-          "scope": "local",
-          "name": "specific_device_uid",
-          "type": "datatype.string",
-          "description": "UID Returned by the /specific-device endpoint",
-          "is_required": false,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_01XAF6VEO5NE04Lrm0pzxWyc5iLyyvOuxRs",
         "object_type": "variable_workflow"
       },
       {
@@ -145,45 +48,45 @@
         "object_type": "variable_workflow"
       },
       {
-        "schema_id": "datatype.boolean",
+        "schema_id": "datatype.string",
         "properties": {
-          "value": false,
+          "value": "Default Access Control Policy",
           "scope": "input",
-          "name": "is_malware",
-          "type": "datatype.boolean",
-          "description": "true if malware license required",
+          "name": "policy",
+          "type": "datatype.string",
+          "description": "Policy to apply to the newly onboarded device",
           "is_required": false,
           "is_invisible": false
         },
-        "unique_name": "variable_workflow_01XAC5V1SHL270et51uiQDqy4yAUMK0F3OP",
-        "object_type": "variable_workflow"
-      },
-      {
-        "schema_id": "datatype.boolean",
-        "properties": {
-          "value": false,
-          "scope": "input",
-          "name": "is_virtual",
-          "type": "datatype.boolean",
-          "description": "Set to true if this is a virtual FTD we are onboarding. ",
-          "is_required": false,
-          "is_invisible": false
-        },
-        "unique_name": "variable_workflow_01XABRVRWQSY82KB9NRg8fXFUduWX0Xw5qS",
+        "unique_name": "variable_workflow_01XB6OX2VFTRR3tKUlVzGGsC6heiU5Am3Yu",
         "object_type": "variable_workflow"
       },
       {
         "schema_id": "datatype.string",
         "properties": {
-          "value": "BASE",
+          "value": "",
           "scope": "local",
-          "name": "entitlements",
+          "name": "policy_id",
           "type": "datatype.string",
-          "description": "Dynamically build the license entitlements based on the workflow input.",
+          "description": "The policy id that we are applying to the onboarded FTD",
           "is_required": false,
           "is_invisible": false
         },
-        "unique_name": "variable_workflow_01XACBFYQCNY82aJCDnoEhJaNxvY15OEPYE",
+        "unique_name": "variable_workflow_01XB6RMVYO7BI5CG2Qpe2FsydNCkbxUWHaS",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "empty_string",
+          "type": "datatype.string",
+          "description": "An empty string to use for comparions operators",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01XABIGBGXU0I0OZnXFeQlnbSSRdWDnpsXx",
         "object_type": "variable_workflow"
       },
       {
@@ -201,17 +104,114 @@
         "object_type": "variable_workflow"
       },
       {
+        "schema_id": "datatype.boolean",
+        "properties": {
+          "value": false,
+          "scope": "input",
+          "name": "is_virtual",
+          "type": "datatype.boolean",
+          "description": "Set to true if this is a virtual FTD we are onboarding. ",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01XABRVRWQSY82KB9NRg8fXFUduWX0Xw5qS",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.boolean",
+        "properties": {
+          "value": false,
+          "scope": "input",
+          "name": "is_malware",
+          "type": "datatype.boolean",
+          "description": "true if malware license required",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01XAC5V1SHL270et51uiQDqy4yAUMK0F3OP",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "performance_tier",
+          "type": "datatype.string",
+          "description": "For virtual devices, specify the performance tier. Leave empty for physical devices.\nFTDv5\nFTDv10\nFTDv20\nFTDv30\nFTDv50\nFTDv100\nFTDv (For variable)",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01XABV18JRVWD19ARjZKy1UtbAjaO2vegt2",
+        "object_type": "variable_workflow"
+      },
+      {
         "schema_id": "datatype.string",
         "properties": {
           "value": "",
           "scope": "local",
-          "name": "policy_id",
+          "name": "temp",
           "type": "datatype.string",
-          "description": "The policy id that we are applying to the onboarded FTD",
           "is_required": false,
           "is_invisible": false
         },
-        "unique_name": "variable_workflow_01XB6RMVYO7BI5CG2Qpe2FsydNCkbxUWHaS",
+        "unique_name": "variable_workflow_01XAJEVBYWAKG3suS69lI6HLhCJQ3iBmAOS",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "specific_device_uid",
+          "type": "datatype.string",
+          "description": "UID Returned by the /specific-device endpoint",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01XAF6VEO5NE04Lrm0pzxWyc5iLyyvOuxRs",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "cdo_api_key",
+          "type": "datatype.secure_string",
+          "description": "Stores the API key used throughout the workflow",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01XAAXLIRLPVJ0TssYtnsDpF4TASIXfrmEV",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "BASE",
+          "scope": "local",
+          "name": "entitlements",
+          "type": "datatype.string",
+          "description": "Dynamically build the license entitlements based on the workflow input.",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01XACBFYQCNY82aJCDnoEhJaNxvY15OEPYE",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.boolean",
+        "properties": {
+          "value": false,
+          "scope": "input",
+          "name": "is_threat",
+          "type": "datatype.boolean",
+          "description": "true if threat license required",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01XAC548W8C4B1sgysGDY1qTML6oQSuWs37",
         "object_type": "variable_workflow"
       }
     ],
@@ -220,8 +220,8 @@
         "is_atomic": false
       },
       "delete_workflow_instance": false,
-      "description": "Onboard an FTD to CDO cloud delivered FMC",
-      "display_name": "Onboard FTD",
+      "description": "Onboard a Firewall Threat Defense appliance into CDO and cloud delivered Firewall Magagement Center",
+      "display_name": "Onboard FTD into CDO and FMC",
       "runtime_user": {
         "target_default": true
       },
@@ -548,6 +548,57 @@
         "object_type": "definition_activity"
       },
       {
+        "unique_name": "definition_activity_01XABH9H43WJ338BE4yBNvmPU6xQcWRoAkm",
+        "name": "Condition Block",
+        "title": "Does FMC Exists?",
+        "type": "logic.if_else",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "description": "If no cloud FMC exists, we need to stop.",
+          "display_name": "Does FMC Exists?",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "blocks": [
+          {
+            "unique_name": "definition_activity_01XABH9HHUPQI5p1fxMzHv1lHLNvfg8owJM",
+            "name": "Condition Branch",
+            "title": "Condition Branch",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_01XAB2S1ZWPQI2C6JYZMnmqqkwCcztxTHOq.output.jsonpath_queries.associatedDeviceUid$",
+                "operator": "eq",
+                "right_operand": "$workflow.definition_workflow_01XA9YONXBUFF1Ba3sx8oRknTP364C2Jvzo.local.variable_workflow_01XABIGBGXU0I0OZnXFeQlnbSSRdWDnpsXx$"
+              },
+              "continue_on_failure": false,
+              "display_name": "Condition Branch",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_01XABHTM1XW9702T5hLjhQZiZ2lTypm3FEU",
+                "name": "Completed",
+                "title": "No FMC Found",
+                "type": "logic.completed",
+                "base_type": "activity",
+                "properties": {
+                  "completion_type": "failed-completed",
+                  "continue_on_failure": false,
+                  "display_name": "No FMC Found",
+                  "result_message": "There appears to be no FMC provisioned in this account.",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          }
+        ]
+      },
+      {
         "unique_name": "definition_activity_01XB5RHTE3JA80w3eV5akXv5L7id0ylCkFu",
         "name": "HTTP Request",
         "title": "Get FMC Domain uid",
@@ -785,57 +836,6 @@
         ]
       },
       {
-        "unique_name": "definition_activity_01XABH9H43WJ338BE4yBNvmPU6xQcWRoAkm",
-        "name": "Condition Block",
-        "title": "Does FMC Exists?",
-        "type": "logic.if_else",
-        "base_type": "activity",
-        "properties": {
-          "continue_on_failure": false,
-          "description": "If no cloud FMC exists, we need to stop.",
-          "display_name": "Does FMC Exists?",
-          "skip_execution": false
-        },
-        "object_type": "definition_activity",
-        "blocks": [
-          {
-            "unique_name": "definition_activity_01XABH9HHUPQI5p1fxMzHv1lHLNvfg8owJM",
-            "name": "Condition Branch",
-            "title": "Condition Branch",
-            "type": "logic.condition_block",
-            "base_type": "activity",
-            "properties": {
-              "condition": {
-                "left_operand": "$activity.definition_activity_01XAB2S1ZWPQI2C6JYZMnmqqkwCcztxTHOq.output.jsonpath_queries.associatedDeviceUid$",
-                "operator": "eq",
-                "right_operand": "$workflow.definition_workflow_01XA9YONXBUFF1Ba3sx8oRknTP364C2Jvzo.local.variable_workflow_01XABIGBGXU0I0OZnXFeQlnbSSRdWDnpsXx$"
-              },
-              "continue_on_failure": false,
-              "display_name": "Condition Branch",
-              "skip_execution": false
-            },
-            "object_type": "definition_activity",
-            "actions": [
-              {
-                "unique_name": "definition_activity_01XABHTM1XW9702T5hLjhQZiZ2lTypm3FEU",
-                "name": "Completed",
-                "title": "No FMC Found",
-                "type": "logic.completed",
-                "base_type": "activity",
-                "properties": {
-                  "completion_type": "failed-completed",
-                  "continue_on_failure": false,
-                  "display_name": "No FMC Found",
-                  "result_message": "There appears to be no FMC provisioned in this account.",
-                  "skip_execution": false
-                },
-                "object_type": "definition_activity"
-              }
-            ]
-          }
-        ]
-      },
-      {
         "unique_name": "definition_activity_01XABYV9DLKUW1SccbqUAAtMawz2QPRIQa7",
         "name": "Condition Block",
         "title": "Check Virtual Tier",
@@ -851,7 +851,7 @@
           {
             "unique_name": "definition_activity_01XABYV9QLY3H3CX44rFu5QFvushDKxYVy7",
             "name": "Condition Branch",
-            "title": "Is Virtual",
+            "title": "No performance tier provided",
             "type": "logic.condition_block",
             "base_type": "activity",
             "properties": {
@@ -869,20 +869,20 @@
                 }
               },
               "continue_on_failure": false,
-              "display_name": "Is Virtual",
+              "display_name": "No performance tier provided",
               "skip_execution": false
             },
             "object_type": "definition_activity",
             "actions": [
               {
-                "unique_name": "definition_activity_01XAC0JBSR2F14mATdmvpQx9eUYDrfVAFAN",
+                "unique_name": "definition_activity_01XV0L7WY7RCK27UK5BOjISDvHqFCoRlvxN",
                 "name": "Set Variables",
-                "title": "Set Performance Tier",
+                "title": "Default Performance Tier ",
                 "type": "core.set_multiple_variables",
                 "base_type": "activity",
                 "properties": {
                   "continue_on_failure": false,
-                  "display_name": "Set Performance Tier",
+                  "display_name": "Default Performance Tier ",
                   "skip_execution": false,
                   "variables_to_update": [
                     {
@@ -1818,8 +1818,8 @@
   },
   "events": {
     "event_webhook_01XAHOO2COPE73GHWKx32y0hm3PhjoUxaNm": {
-      "name": "CDO-ONBOARD-FTD-to-FMC",
-      "title": "CDO-ONBOARD-FTD-to-FMC",
+      "name": "EVENT-ONBOARD-FTD-CDO",
+      "title": "EVENT-ONBOARD-FTD-CDO",
       "description": "Onboard an FTD to a CDO deilvered FMC.",
       "type": "webhook.event",
       "base_type": "event",
@@ -1830,7 +1830,7 @@
       "properties": {
         "description": "Onboard an FTD to a CDO deilvered FMC.",
         "display_name": "CDO-OBOARD-FTD-to-FMC",
-        "title": "CDO-ONBOARD-FTD-to-FMC",
+        "title": "EVENT-ONBOARD-FTD-CDO",
         "webhook_id": "webhook_01XAHOLGQMEFM0OKeXgfmXU8QuIEKhYOMKd"
       },
       "unique_name": "event_webhook_01XAHOO2COPE73GHWKx32y0hm3PhjoUxaNm"
@@ -1857,14 +1857,14 @@
   },
   "webhooks": {
     "webhook_01XAHOLGQMEFM0OKeXgfmXU8QuIEKhYOMKd": {
-      "name": "ONBOARD FTD TO CDO FMC",
-      "title": "ONBOARD FTD TO CDO FMC",
+      "name": "WEBHOOK-ONBOARD-FTD-CDO",
+      "title": "WEBHOOK-ONBOARD-FTD-CDO",
       "type": "generic.webhook",
       "base_type": "webhook",
       "object_type": "webhook",
       "version": "1.0.0",
       "properties": {
-        "display_name": "ONBOARD FTD TO CDO FMC",
+        "display_name": "WEBHOOK-ONBOARD-FTD-CDO",
         "request_content_type": "application/json"
       },
       "unique_name": "webhook_01XAHOLGQMEFM0OKeXgfmXU8QuIEKhYOMKd"
