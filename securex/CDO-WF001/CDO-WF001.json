@@ -1,0 +1,1076 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7",
+    "name": "CDO-WF001",
+    "title": "CDO-WF001",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "mongo_atlas_api_key",
+          "type": "datatype.secure_string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01Y0001PPVQMI18YGG8Ln0bdOGs2qCWIkCL",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "log_message",
+          "type": "datatype.string",
+          "description": "Message to log to mongo db",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01WVSIESTGJPB3ZeWAM3LkDq3bXfsNGkF8h",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.integer",
+        "properties": {
+          "value": 50,
+          "scope": "input",
+          "name": "limit",
+          "type": "datatype.integer",
+          "description": "The number of records to retrieve at one time from the API. Default = 50",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01WP7VU2P00V55UyrEHHrzQ6oqmuQ7QjgJL",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.boolean",
+        "properties": {
+          "value": false,
+          "scope": "local",
+          "name": "macro_succeeded",
+          "type": "datatype.boolean",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01X0BA94BMATT41nijhqUgk9wGYHPZuvDzy",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "cdo_api_token",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01XZRV8C74OOS5PgCqTK6XDz6HACaOl1FVK",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "[CDO]-US",
+          "scope": "input",
+          "name": "cdo_region",
+          "type": "datatype.string",
+          "description": "Set the CDO region to query. Note that each region uses a unique API key.\n[CDO]-US\n[CDO]-EMEA\n[CDO]-APJ",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01XZRIQ0Z6HV04XZisYg8lyTpBJKyYCW5kM",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "CDO-WF001",
+          "scope": "input",
+          "name": "workflow_name",
+          "type": "datatype.string",
+          "description": "The workflow name that will be used in error logging.",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01WVTTGKSLGQK0ba3Ci47OpS0HDv1uhLRKJ",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "cdo_tag",
+          "type": "datatype.string",
+          "description": "Retreive the device uid and the configId for any device in CDO that has this tag associated with it.",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01WP7QKJROP7X1CqKNlz716BHlWcxJIRXIj",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "macro",
+          "type": "datatype.string",
+          "description": "The macro we wish to run",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01WPALOY2DV7B01hbmWl7XK1wYdc07k1mVE",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "mongo_atlas_data_source",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01WVSDXZZMOA06o3TSulK4wTReLPgeBKNEH",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "mongo_atlas_api",
+          "type": "datatype.string",
+          "description": "The API endpoint for the mongo atlas provider. e.g. \"/app/data-foobar/endpoint/data/beta\"",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01XZZJUZ9YLS564MgPnTTqQO1FOFxQ7TVA1",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "mongo_atlas_transaction_id",
+          "type": "datatype.string",
+          "description": "The outout from the mongo db api to write the error log message.",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01WVT9M50V3YG0GamoedxEpxrnbMPAh6bRG",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "mongo_atlas_collection",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01WVSFENY23CH4MzH1ouDFHYSSITZNJMJAF",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "mongo_atlas_database ",
+          "type": "datatype.string",
+          "is_required": true,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01WVSEHM2DMZL3RICEyjK9ihFTtUedwifH5",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "is_atomic": false
+      },
+      "delete_workflow_instance": false,
+      "description": "Run the selected command on all ASAs that are tagged with the given TAG in cdo. \nWebhook payload example:\n{\n\t\"cdo_api_key\": \"xxxxxxx\",\n    \"cdo_region\": \"[CDO] - US\",\n    \"macro\": \"Clear all connections\",\n    \"cdo_tag\": \"SecureX:WF001\",\n    \"mongo_atlas_data_source\": \"MYDATASOURCE\",\n    \"mongo_atlas_database\": \"my_database\",\n    \"mongo_atlas_collection\": \"my_collection\",\n    \"mongo_atlas_api\": \"/app/data-foo/endpoint/data/beta\"\n}",
+      "display_name": "CDO-WF001",
+      "runtime_user": {
+        "target_default": true
+      },
+      "target": {
+        "execute_on_target_group": true,
+        "target_group": {
+          "target_group_id": "target_group_01XZC4II9S2SD7elr44NmrQG3WccFKJAVLz",
+          "run_on_all_targets": false,
+          "selected_target_types": [
+            "web-service.endpoint"
+          ],
+          "use_criteria": {
+            "choose_target_using_algorithm": "choose_first_with_matching_criteria",
+            "conditions": [
+              {
+                "operator": "eq",
+                "left_operand": "$targetgroup.web-service endpoint.input.display_name$",
+                "right_operand": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01XZRIQ0Z6HV04XZisYg8lyTpBJKyYCW5kM$"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01XZZMFX767SY0IS5TFuEpaWlFRQhZoXtqa",
+        "name": "Condition Block",
+        "title": "Webhook Triggered",
+        "type": "logic.if_else",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Webhook Triggered",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "blocks": [
+          {
+            "unique_name": "definition_activity_01XZZMFXNL6ER0Y9HO7IkYbkJc1wpjfzBa1",
+            "name": "Condition Branch",
+            "title": "Is Webhook Triggered",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$trigger.triggerevent_01YB513JTWI2X3m9VZHNL0T7t3XuwvFiYFN.common.trigger_id$",
+                "operator": "eq",
+                "right_operand": "triggerevent_01YB513JTWI2X3m9VZHNL0T7t3XuwvFiYFN"
+              },
+              "continue_on_failure": false,
+              "display_name": "Is Webhook Triggered",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_01XZZNOY6AFS43a9gjHITYMfFUcxhBr8DVJ",
+                "name": "JSONPath Query",
+                "title": "Get webhook payload",
+                "type": "corejava.jsonpathquery",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "display_name": "Get webhook payload",
+                  "input_json": "$trigger.triggerevent_01YB513JTWI2X3m9VZHNL0T7t3XuwvFiYFN.output.request_body$",
+                  "jsonpath_queries": [
+                    {
+                      "jsonpath_query": "$.cdo_api_key",
+                      "jsonpath_query_name": "cdo_api_key",
+                      "jsonpath_query_type": "string"
+                    },
+                    {
+                      "jsonpath_query": "$.cdo_region",
+                      "jsonpath_query_name": "cdo_region",
+                      "jsonpath_query_type": "string"
+                    },
+                    {
+                      "jsonpath_query": "$.macro",
+                      "jsonpath_query_name": "macro",
+                      "jsonpath_query_type": "string"
+                    },
+                    {
+                      "jsonpath_query": "$.cdo_tag",
+                      "jsonpath_query_name": "cdo_tag",
+                      "jsonpath_query_type": "string"
+                    },
+                    {
+                      "jsonpath_query": "$.mongo_atlas_data_source",
+                      "jsonpath_query_name": "mongo_atlas_data_source",
+                      "jsonpath_query_type": "string"
+                    },
+                    {
+                      "jsonpath_query": "$.mongo_atlas_database",
+                      "jsonpath_query_name": "mongo_atlas_database",
+                      "jsonpath_query_type": "string"
+                    },
+                    {
+                      "jsonpath_query": "$.mongo_atlas_collection",
+                      "jsonpath_query_name": "mongo_atlas_collection",
+                      "jsonpath_query_type": "string"
+                    },
+                    {
+                      "jsonpath_query": "$.mongo_atlas_api",
+                      "jsonpath_query_name": "mongo_atlas_api",
+                      "jsonpath_query_type": "string"
+                    },
+                    {
+                      "jsonpath_query": "$.mongo_atlas_api_key",
+                      "jsonpath_query_name": "mongo_atlas_api_key",
+                      "jsonpath_query_type": "secure_string"
+                    }
+                  ],
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_01XZZU9AZR1O13GxjOCsW1ewg8S5Bnl4KEp",
+                "name": "Set Variables",
+                "title": "Set Input Variables",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Set Input Variables",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01XZRV8C74OOS5PgCqTK6XDz6HACaOl1FVK$",
+                      "variable_value_new": "$activity.definition_activity_01XZZNOY6AFS43a9gjHITYMfFUcxhBr8DVJ.output.jsonpath_queries.cdo_api_key$"
+                    },
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01XZRIQ0Z6HV04XZisYg8lyTpBJKyYCW5kM$",
+                      "variable_value_new": "$activity.definition_activity_01XZZNOY6AFS43a9gjHITYMfFUcxhBr8DVJ.output.jsonpath_queries.cdo_region$"
+                    },
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01WP7QKJROP7X1CqKNlz716BHlWcxJIRXIj$",
+                      "variable_value_new": "$activity.definition_activity_01XZZNOY6AFS43a9gjHITYMfFUcxhBr8DVJ.output.jsonpath_queries.cdo_tag$"
+                    },
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01WPALOY2DV7B01hbmWl7XK1wYdc07k1mVE$",
+                      "variable_value_new": "$activity.definition_activity_01XZZNOY6AFS43a9gjHITYMfFUcxhBr8DVJ.output.jsonpath_queries.macro$"
+                    },
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01XZZJUZ9YLS564MgPnTTqQO1FOFxQ7TVA1$",
+                      "variable_value_new": "$activity.definition_activity_01XZZNOY6AFS43a9gjHITYMfFUcxhBr8DVJ.output.jsonpath_queries.mongo_atlas_api$"
+                    },
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01WVSFENY23CH4MzH1ouDFHYSSITZNJMJAF$",
+                      "variable_value_new": "$activity.definition_activity_01XZZNOY6AFS43a9gjHITYMfFUcxhBr8DVJ.output.jsonpath_queries.mongo_atlas_collection$"
+                    },
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01WVSDXZZMOA06o3TSulK4wTReLPgeBKNEH$",
+                      "variable_value_new": "$activity.definition_activity_01XZZNOY6AFS43a9gjHITYMfFUcxhBr8DVJ.output.jsonpath_queries.mongo_atlas_data_source$"
+                    },
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01WVSEHM2DMZL3RICEyjK9ihFTtUedwifH5$",
+                      "variable_value_new": "$activity.definition_activity_01XZZNOY6AFS43a9gjHITYMfFUcxhBr8DVJ.output.jsonpath_queries.mongo_atlas_database$"
+                    },
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01Y0001PPVQMI18YGG8Ln0bdOGs2qCWIkCL$",
+                      "variable_value_new": "$activity.definition_activity_01XZZNOY6AFS43a9gjHITYMfFUcxhBr8DVJ.output.jsonpath_queries.mongo_atlas_api_key$"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "unique_name": "definition_activity_01WPAJ7PUSMFX31K8pEy7pudazaiAArgCsQ",
+        "name": "Parallel Block",
+        "title": "Get required elements from CDO",
+        "type": "logic.parallel",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Get required elements from CDO",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "blocks": [
+          {
+            "unique_name": "definition_activity_01WPAJ7QKO4Z52vgGbHkhht1QcFrS14ISud",
+            "name": "Parallel Branch",
+            "title": "Get Device and Config uids",
+            "type": "logic.parallel_block",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": false,
+              "display_name": "Get Device and Config uids",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_01WUZPA53BH2X1BqsQl2zvThRoPo0pJlr0S",
+                "name": "[CDO] Search TAG",
+                "title": "[CDO] Search TAG",
+                "type": "workflow.atomic_workflow",
+                "base_type": "subworkflow",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "[CDO] Search TAG",
+                  "input": {
+                    "variable_workflow_01WUXNOIU5ZMX4AyK9TGNgVwTZchkyAtcQp": 0,
+                    "variable_workflow_01WUXNWVYJEO21rj3S2bCBSum1wJ0KaLdUl": 50,
+                    "variable_workflow_01WUXO5Z48M4O7MjA09eVHBaHTV46YhrbNx": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01WP7QKJROP7X1CqKNlz716BHlWcxJIRXIj$",
+                    "variable_workflow_01XZRZFARBS546NrB8JR1638HA8Yn6EXB35": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01XZRV8C74OOS5PgCqTK6XDz6HACaOl1FVK$"
+                  },
+                  "runtime_user": {
+                    "target_default": true
+                  },
+                  "skip_execution": false,
+                  "target": {
+                    "use_workflow_target_group": true
+                  },
+                  "workflow_id": "definition_workflow_01WU6TSH0Z3HW7QuA9a1HnzJtQIiDcX36f8",
+                  "workflow_name": "[CDO] Search TAG"
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_01WP7Z90GTZXT1NuoiD5BOmcxJYBvYPCo7J",
+                "name": "Read Table from JSON",
+                "title": "Table: Device and Config Ids",
+                "type": "corejava.read_table_from_json",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "display_name": "Table: Device and Config Ids",
+                  "input_json": "$activity.definition_activity_01WUZPA53BH2X1BqsQl2zvThRoPo0pJlr0S.output.variable_workflow_01WUY5V0INHYA61CPVBgVf7PpiXPlW2wCh2$",
+                  "jsonpath_query": "$.",
+                  "persist_output": false,
+                  "populate_columns": false,
+                  "skip_execution": false,
+                  "table_columns": [
+                    {
+                      "column_name": "name",
+                      "column_type": "string"
+                    },
+                    {
+                      "column_name": "uid",
+                      "column_type": "string"
+                    },
+                    {
+                      "column_name": "configId",
+                      "column_type": "string"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_01WPAJ7R3TLJ93kG1LXqp6WsIH0FU8tXLAS",
+            "name": "Parallel Branch",
+            "title": "Get ASA Macros",
+            "type": "logic.parallel_block",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": false,
+              "display_name": "Get ASA Macros",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_01WPAJG1BQ3L8420eaUKMa6KE1Csh8RTHi0",
+                "name": "[CDO] Get ASA Macros",
+                "title": "[CDO] Get ASA Macros",
+                "type": "workflow.atomic_workflow",
+                "base_type": "subworkflow",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "[CDO] Get ASA Macros",
+                  "input": {
+                    "variable_workflow_01WP82O3E0KW91WEW7Go46h2zsh0UFtHuxz": 25,
+                    "variable_workflow_01WP82SBSE1DF5BTmUYKnCAvZORFy6e9M0i": 0,
+                    "variable_workflow_01XZS0WJ6J4IX2kB5gmkAsyLMOjUDvPXLuN": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01XZRV8C74OOS5PgCqTK6XDz6HACaOl1FVK$"
+                  },
+                  "runtime_user": {
+                    "target_default": true
+                  },
+                  "skip_execution": false,
+                  "target": {
+                    "use_workflow_target_group": true
+                  },
+                  "workflow_id": "definition_workflow_01WMQXNST0MKE5fJCRuNWTLbaLpRX9Amwn3",
+                  "workflow_name": "[CDO] Get ASA Macros"
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_01WPAK1S4JM287NAJY1uhbIIzWiW4u6qEx1",
+                "name": "Read Table from JSON",
+                "title": "Table: Macros",
+                "type": "corejava.read_table_from_json",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "description": "Get all avaiable macros as a table",
+                  "display_name": "Table: Macros",
+                  "input_json": "$activity.definition_activity_01WPAJG1BQ3L8420eaUKMa6KE1Csh8RTHi0.output.variable_workflow_01WP8GFCTE7185nDds52bittWhmJ4bqvIzl$",
+                  "jsonpath_query": "$..[?(@.name=='$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01WPALOY2DV7B01hbmWl7XK1wYdc07k1mVE$')]",
+                  "persist_output": true,
+                  "populate_columns": false,
+                  "skip_execution": false,
+                  "table_columns": [
+                    {
+                      "column_name": "name",
+                      "column_type": "string"
+                    },
+                    {
+                      "column_name": "uid",
+                      "column_type": "string"
+                    },
+                    {
+                      "column_name": "command",
+                      "column_type": "string"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "unique_name": "definition_activity_01WPAVAEDB6Q03WAInlHWNAjUZTy4eImzXy",
+        "name": "For Each",
+        "title": "For Each Device Execute CLI Macro",
+        "type": "logic.for_each",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "For Each Device Execute CLI Macro",
+          "skip_execution": false,
+          "source_array": "$activity.definition_activity_01WP7Z90GTZXT1NuoiD5BOmcxJYBvYPCo7J.output.read_table_from_json$"
+        },
+        "object_type": "definition_activity",
+        "actions": [
+          {
+            "unique_name": "definition_activity_01WPDKI799HPF7kC6PGhxyLZg0dWO3Bw1KS",
+            "name": "[PYTHON] Generate UUID",
+            "title": "[PYTHON] Generate UUID",
+            "type": "workflow.atomic_workflow",
+            "base_type": "subworkflow",
+            "properties": {
+              "continue_on_failure": false,
+              "display_name": "[PYTHON] Generate UUID",
+              "runtime_user": {
+                "target_default": true
+              },
+              "skip_execution": false,
+              "target": {
+                "execute_on_this_target": true,
+                "target_id": "definition_target_01W7XDQ55LIBW7MZ9VU2ygaJwgOXwLLkzuR",
+                "target_type": "web-service.endpoint"
+              },
+              "workflow_id": "definition_workflow_01WMQ7SDTTOMZ4vVoOdRdPLwbZwlP1Rxxml",
+              "workflow_name": "[PYTHON] Generate UUID"
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_01WVTR457SY7S4w5cFThaBorZy6L0bhSgjD",
+            "name": "[PYTHON] Generate EPOCH Timestamp",
+            "title": "[PYTHON] Generate EPOCH Timestamp",
+            "type": "workflow.atomic_workflow",
+            "base_type": "subworkflow",
+            "properties": {
+              "continue_on_failure": false,
+              "display_name": "[PYTHON] Generate EPOCH Timestamp",
+              "runtime_user": {
+                "target_default": true
+              },
+              "skip_execution": false,
+              "target": {
+                "no_target": true
+              },
+              "workflow_id": "definition_workflow_01WVTLT02J4DF5uIJnqJ4ArKjbAtD1N1mol",
+              "workflow_name": "[PYTHON] Generate EPOCH Timestamp"
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_01WPUW075VDUJ1cSQlvVM2h95LQEHdKZ2s3",
+            "name": "[CDO] Device in Sync",
+            "title": "[CDO] Device in Sync",
+            "type": "workflow.atomic_workflow",
+            "base_type": "subworkflow",
+            "properties": {
+              "continue_on_failure": false,
+              "display_name": "[CDO] Device in Sync",
+              "input": {
+                "variable_workflow_01WPULV8VDK630OuPWWhKIit29m2Sz2rKCc": "$activity.definition_activity_01WPAVAEDB6Q03WAInlHWNAjUZTy4eImzXy.input.source_array[@].uid$",
+                "variable_workflow_01XZS2EEH7UTW5O9tcZ1JdELxvWvXl9YE4r": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01XZRV8C74OOS5PgCqTK6XDz6HACaOl1FVK$"
+              },
+              "runtime_user": {
+                "target_default": true
+              },
+              "skip_execution": false,
+              "target": {
+                "use_workflow_target_group": true
+              },
+              "workflow_id": "definition_workflow_01WPUL27LCPRS57fcMgpX15qAZ7PsS1PJmg",
+              "workflow_name": "[CDO] Device in Sync"
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_01WVS8G3XZ5ZR4f0AiwvXJdHQTJbGGQSCrM",
+            "name": "Condition Block",
+            "title": "Is the CDO and the device in sync?",
+            "type": "logic.if_else",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": false,
+              "description": "Check to see if CDO and the device are in sync. If they are not, skip the device, as the command could be a config change. In the future, we may filter the commands to allow show or non-config commands to proceed even if the device is not in sync.",
+              "display_name": "Is the CDO and the device in sync?",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "blocks": [
+              {
+                "unique_name": "definition_activity_01WVS8G4N1LLT04ArBrREgTqHvczdpfp0yw",
+                "name": "Condition Branch",
+                "title": "Run Macro If is in Sync",
+                "type": "logic.condition_block",
+                "base_type": "activity",
+                "properties": {
+                  "condition": {
+                    "left_operand": "$activity.definition_activity_01WPUW075VDUJ1cSQlvVM2h95LQEHdKZ2s3.output.variable_workflow_01WPUQDI5FPEL04EqdBUYAIi3GL3GmCTOTg$",
+                    "operator": "eq",
+                    "right_operand": true
+                  },
+                  "continue_on_failure": false,
+                  "display_name": "Run Macro If is in Sync",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_01WQ0S1QRO86923VEbPZVFPpKnQUrjRshGP",
+                    "name": "[CDO] Run CLI Macro",
+                    "title": "[CDO] Run CLI Macro",
+                    "type": "workflow.atomic_workflow",
+                    "base_type": "subworkflow",
+                    "properties": {
+                      "continue_on_failure": true,
+                      "display_name": "[CDO] Run CLI Macro",
+                      "input": {
+                        "variable_workflow_01WPU02L0EY3N1nW7r3yJ2MyUkLJQhlQblH": "$activity.definition_activity_01WPAK1S4JM287NAJY1uhbIIzWiW4u6qEx1.output.read_table_from_json[0].command$",
+                        "variable_workflow_01WPU0E3ZE39N7XQn2n4V96Aih4iILwMhOm": "$activity.definition_activity_01WPDKI799HPF7kC6PGhxyLZg0dWO3Bw1KS.output.variable_workflow_01WMVY4K2LX392xypzvDSiE2FM5nXcdHTpt$",
+                        "variable_workflow_01WPU0NOSWBPJ0OuMJtfmDbIjehLUtB0wS8": "$activity.definition_activity_01WPAK1S4JM287NAJY1uhbIIzWiW4u6qEx1.output.read_table_from_json[0].uid$",
+                        "variable_workflow_01WPU1A9AOYOC54lPz1ws7W0qjrNnYMMcKn": "$activity.definition_activity_01WPAVAEDB6Q03WAInlHWNAjUZTy4eImzXy.input.source_array[@].configId$",
+                        "variable_workflow_01XZS3PAJQMBW4VLJDXTVPgHkOSgM1gcNHG": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01XZRV8C74OOS5PgCqTK6XDz6HACaOl1FVK$"
+                      },
+                      "runtime_user": {
+                        "target_default": true
+                      },
+                      "skip_execution": false,
+                      "target": {
+                        "use_workflow_target_group": true
+                      },
+                      "workflow_id": "definition_workflow_01WPTY9OL1LPW2mYfTuPKDqYzp0jBr8oMr4",
+                      "workflow_name": "[CDO] Run CLI Macro"
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_01X0FIKBZHK4W6OfftJTRmLlgajyhW2kxLl",
+                    "name": "Condition Block",
+                    "title": "Did Command Succeed",
+                    "type": "logic.if_else",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "description": "If the devices are in sync, we run the CLI macro. Set the log message based on the results of that run.",
+                      "display_name": "Did Command Succeed",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity",
+                    "blocks": [
+                      {
+                        "unique_name": "definition_activity_01X0FIKDGHDZF5HFbKebKMNl3XdL917IOcJ",
+                        "name": "Condition Branch",
+                        "title": "Macro Succeeded",
+                        "type": "logic.condition_block",
+                        "base_type": "activity",
+                        "properties": {
+                          "condition": {
+                            "left_operand": "$activity.definition_activity_01WQ0S1QRO86923VEbPZVFPpKnQUrjRshGP.output.succeeded$",
+                            "operator": "eq",
+                            "right_operand": true
+                          },
+                          "continue_on_failure": false,
+                          "display_name": "Macro Succeeded",
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity",
+                        "actions": [
+                          {
+                            "unique_name": "definition_activity_01X0FJ5KTUGY609iNOejd482rJyYOb2RwVG",
+                            "name": "Set Variables",
+                            "title": "Set Variables",
+                            "type": "core.set_multiple_variables",
+                            "base_type": "activity",
+                            "properties": {
+                              "continue_on_failure": false,
+                              "display_name": "Set Variables",
+                              "skip_execution": false,
+                              "variables_to_update": [
+                                {
+                                  "variable_to_update": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.local.variable_workflow_01WVSIESTGJPB3ZeWAM3LkDq3bXfsNGkF8h$",
+                                  "variable_value_new": "{\n\"wf\": \"$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01WVTTGKSLGQK0ba3Ci47OpS0HDv1uhLRKJ$\",\n\"device_uid\": \"$activity.definition_activity_01WPAVAEDB6Q03WAInlHWNAjUZTy4eImzXy.input.source_array[@].uid$\",\n\"device_name\": \"$activity.definition_activity_01WPAVAEDB6Q03WAInlHWNAjUZTy4eImzXy.input.source_array[@].name$\",\n\"message\": \"CLI Macro '$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01WPALOY2DV7B01hbmWl7XK1wYdc07k1mVE$' successfully executed\",\n\"commands\": \"$activity.definition_activity_01WQ0S1QRO86923VEbPZVFPpKnQUrjRshGP.output.variable_workflow_01X6UCGPFO6DS01yjXHmsRr45kiFeSZ5tVE$\",\n\"results\": \"$activity.definition_activity_01WQ0S1QRO86923VEbPZVFPpKnQUrjRshGP.output.variable_workflow_01X6T89AKTF895lbuFKOuel4zLoRN2suVn2$\",\n\"success\": $activity.definition_activity_01WQ0S1QRO86923VEbPZVFPpKnQUrjRshGP.output.succeeded$,\n\"createdAt\": { \"$date\": { \"$numberLong\": \"$activity.definition_activity_01WVTR457SY7S4w5cFThaBorZy6L0bhSgjD.output.variable_workflow_01WVTNB3QPBNT1j2AjCoaPWzqcbfNt4eeLa$\" } }\n}"
+                                }
+                              ]
+                            },
+                            "object_type": "definition_activity"
+                          }
+                        ]
+                      },
+                      {
+                        "unique_name": "definition_activity_01X0FIKE2JN1J5ofr6r38lhS9pOlsRbg98T",
+                        "name": "Condition Branch",
+                        "title": "Macro Failed",
+                        "type": "logic.condition_block",
+                        "base_type": "activity",
+                        "properties": {
+                          "condition": {
+                            "left_operand": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.output.instance_id$",
+                            "operator": "eq",
+                            "right_operand": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.output.instance_id$"
+                          },
+                          "continue_on_failure": false,
+                          "display_name": "Macro Failed",
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity",
+                        "actions": [
+                          {
+                            "unique_name": "definition_activity_01X0FLQGPCBYP3nRYThkvOfedcZHR66b52J",
+                            "name": "Set Variables",
+                            "title": "Set Variables",
+                            "type": "core.set_multiple_variables",
+                            "base_type": "activity",
+                            "properties": {
+                              "continue_on_failure": false,
+                              "display_name": "Set Variables",
+                              "skip_execution": false,
+                              "variables_to_update": [
+                                {
+                                  "variable_to_update": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.local.variable_workflow_01WVSIESTGJPB3ZeWAM3LkDq3bXfsNGkF8h$",
+                                  "variable_value_new": "{\n\"wf\": \"$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01WVTTGKSLGQK0ba3Ci47OpS0HDv1uhLRKJ$\",\n\"device_uid\": \"$activity.definition_activity_01WPAVAEDB6Q03WAInlHWNAjUZTy4eImzXy.input.source_array[@].uid$\",\n\"device_name\": \"$activity.definition_activity_01WPAVAEDB6Q03WAInlHWNAjUZTy4eImzXy.input.source_array[@].name$\",\n\"message\": \"CLI Macro '$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01WPALOY2DV7B01hbmWl7XK1wYdc07k1mVE$' failed execution for an unknown reason\",\n\"success\": $activity.definition_activity_01WQ0S1QRO86923VEbPZVFPpKnQUrjRshGP.output.succeeded$,\n\"createdAt\": { \"$date\": { \"$numberLong\": \"$activity.definition_activity_01WVTR457SY7S4w5cFThaBorZy6L0bhSgjD.output.variable_workflow_01WVTNB3QPBNT1j2AjCoaPWzqcbfNt4eeLa$\" } }\n}"
+                                }
+                              ]
+                            },
+                            "object_type": "definition_activity"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "unique_name": "definition_activity_01WVS8G5BPOWA0outINS9tQwCzIBfVVhHvX",
+                "name": "Condition Branch",
+                "title": "Log error if not in sync",
+                "type": "logic.condition_block",
+                "base_type": "activity",
+                "properties": {
+                  "condition": {
+                    "left_operand": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.output.instance_id$",
+                    "operator": "eq",
+                    "right_operand": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.output.instance_id$"
+                  },
+                  "continue_on_failure": false,
+                  "description": "If the device is not in sync or has other problems, we cannot reliable run a macro. Log that we did not run the command.",
+                  "display_name": "Log error if not in sync",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_01WVSIWAH97SS0w4vBHJLraxJh1B2AlaOiJ",
+                    "name": "Set Variables",
+                    "title": "Not in Sync Log Message",
+                    "type": "core.set_multiple_variables",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "description": "Assemble the log message json payload",
+                      "display_name": "Not in Sync Log Message",
+                      "skip_execution": false,
+                      "variables_to_update": [
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.local.variable_workflow_01WVSIESTGJPB3ZeWAM3LkDq3bXfsNGkF8h$",
+                          "variable_value_new": "{\n\"wf\": \"$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01WVTTGKSLGQK0ba3Ci47OpS0HDv1uhLRKJ$\",\n\"device_uid\": \"$activity.definition_activity_01WPAVAEDB6Q03WAInlHWNAjUZTy4eImzXy.input.source_array[@].uid$\",\n\"device_name\": \"$activity.definition_activity_01WPAVAEDB6Q03WAInlHWNAjUZTy4eImzXy.input.source_array[@].name$\",\n\"message\": \"Device not synced. CLI Macro '$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01WPALOY2DV7B01hbmWl7XK1wYdc07k1mVE$' was not executed\",\n\"success\": false,\n\"createdAt\": { \"$date\": { \"$numberLong\": \"$activity.definition_activity_01WVTR457SY7S4w5cFThaBorZy6L0bhSgjD.output.variable_workflow_01WVTNB3QPBNT1j2AjCoaPWzqcbfNt4eeLa$\" } }\n}"
+                        }
+                      ]
+                    },
+                    "object_type": "definition_activity"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_01WVSD320FFP17jRPWK3pqdpLIEYpnmN5xC",
+            "name": "[MONGO-ATLAS] POST API",
+            "title": "[MONGO-ATLAS] POST API",
+            "type": "workflow.atomic_workflow",
+            "base_type": "subworkflow",
+            "properties": {
+              "continue_on_failure": false,
+              "display_name": "[MONGO-ATLAS] POST API",
+              "input": {
+                "variable_workflow_01WVP7EBHBCU01TIdNY1za78jO7RFE0xQvB": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01WVSDXZZMOA06o3TSulK4wTReLPgeBKNEH$",
+                "variable_workflow_01WVP7PF70YD43IoyzAU6awiZiim39GDtMR": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01WVSEHM2DMZL3RICEyjK9ihFTtUedwifH5$",
+                "variable_workflow_01WVP8267UQU83KcakFhxRbeHYBGqZgPMEV": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01WVSFENY23CH4MzH1ouDFHYSSITZNJMJAF$",
+                "variable_workflow_01WVPYHTZIJO978kyJVkV9rCoc1cbSjUV5E": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.local.variable_workflow_01WVSIESTGJPB3ZeWAM3LkDq3bXfsNGkF8h$",
+                "variable_workflow_01WVQJ4D89C6V6OJcz7AP9UCnCG9hLBYN2F": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01XZZJUZ9YLS564MgPnTTqQO1FOFxQ7TVA1$",
+                "variable_workflow_01WVQK1O77YJ20iHKEIGW320Luq7qpq4Fej": "/action/insertOne",
+                "variable_workflow_01Y001QSKCKCE6czoMhcFDTFoBiHBkMJ8Ag": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.input.variable_workflow_01Y0001PPVQMI18YGG8Ln0bdOGs2qCWIkCL$"
+              },
+              "runtime_user": {
+                "target_default": true
+              },
+              "skip_execution": false,
+              "target": {
+                "override_workflow_target": true,
+                "target_id": "definition_target_01WVPA5U1WHCU1RvpSlzCCLdk6JtFuChZMn",
+                "target_type": "web-service.endpoint"
+              },
+              "workflow_id": "definition_workflow_01WVP6BRS7ZXZ005X6LCjB5LzAkKJ9kxzbE",
+              "workflow_name": "[MONGO-ATLAS] POST API"
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_01WVT9P38AYUS7Lyy7ArQeKr8FHPb03zwVu",
+            "name": "Set Variables",
+            "title": "Mongo Trasaction ID",
+            "type": "core.set_multiple_variables",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": false,
+              "description": "Transaction ID for the mongo insert. This will be saved in this variable and can be view in the \"View Runs\" historical log of the workflow.",
+              "display_name": "Mongo Trasaction ID",
+              "skip_execution": false,
+              "variables_to_update": [
+                {
+                  "variable_to_update": "$workflow.definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7.local.variable_workflow_01WVT9M50V3YG0GamoedxEpxrnbMPAh6bRG$",
+                  "variable_value_new": "$activity.definition_activity_01WVSD320FFP17jRPWK3pqdpLIEYpnmN5xC.output.variable_workflow_01WVTAVJTKREL6hHek3q58aAyNvMKm8XJFD$"
+                }
+              ]
+            },
+            "object_type": "definition_activity"
+          }
+        ]
+      }
+    ],
+    "categories": [
+      "category_01OKBY19ZN66M3O3sdNOVqxzM8Zh7mfui5D"
+    ]
+  },
+  "categories": {
+    "category_01OKBY19ZN66M3O3sdNOVqxzM8Zh7mfui5D": {
+      "unique_name": "category_01OKBY19ZN66M3O3sdNOVqxzM8Zh7mfui5D",
+      "name": "CDO",
+      "title": "CDO",
+      "type": "basic.category",
+      "base_type": "category",
+      "description": "CDO related workflows",
+      "category_type": "custom",
+      "object_type": "category"
+    }
+  },
+  "triggers": {
+    "triggerevent_01YB513JTWI2X3m9VZHNL0T7t3XuwvFiYFN": {
+      "workflow_id": "definition_workflow_01WOEYSG2AXVN7M2qp8P029SVvRZ1QVqfl7",
+      "name": "Webhook-Trigger",
+      "title": "",
+      "lowercase_name": "event.webhook-trigger",
+      "type": "event",
+      "base_type": "trigger",
+      "ref_id": "event_webhook_01WYRDCCMSYS525Mbf1lREpDOk2VpJTyhTE",
+      "version": "1.0.0",
+      "disabled": false,
+      "unique_name": "triggerevent_01YB513JTWI2X3m9VZHNL0T7t3XuwvFiYFN",
+      "object_type": "triggerevent"
+    }
+  },
+  "events": {
+    "event_webhook_01WYRDCCMSYS525Mbf1lREpDOk2VpJTyhTE": {
+      "name": "EVENT-CDO-WF001",
+      "title": "EVENT-CDO-WF001",
+      "type": "webhook.event",
+      "base_type": "event",
+      "object_type": "event_webhook",
+      "target_id": "",
+      "webhook_id": "webhook_01WYRBTPRBNO12PFmFr6iNEZDOvWygyzx3g",
+      "version": "1.0.0",
+      "properties": {
+        "display_name": "CDO-WF001-Webhook",
+        "title": "EVENT-CDO-WF001",
+        "webhook_id": "webhook_01WYRBTPRBNO12PFmFr6iNEZDOvWygyzx3g"
+      },
+      "unique_name": "event_webhook_01WYRDCCMSYS525Mbf1lREpDOk2VpJTyhTE"
+    }
+  },
+  "targets": {
+    "definition_target_01W7XBGCJ1F8X2GRKnQLOPutk8mKaaMfM8M": {
+      "unique_name": "definition_target_01W7XBGCJ1F8X2GRKnQLOPutk8mKaaMfM8M",
+      "name": "[CDO]-US",
+      "title": "[CDO]-US",
+      "type": "web-service.endpoint",
+      "base_type": "target",
+      "object_type": "definition_target",
+      "properties": {
+        "disable_certificate_validation": false,
+        "display_name": "[CDO]-US",
+        "host": "defenseorchestrator.com",
+        "ignore_proxy": false,
+        "no_runtime_user": true,
+        "port": 443,
+        "protocol": "https"
+      }
+    },
+    "definition_target_01W7XDQ55LIBW7MZ9VU2ygaJwgOXwLLkzuR": {
+      "unique_name": "definition_target_01W7XDQ55LIBW7MZ9VU2ygaJwgOXwLLkzuR",
+      "name": "CDO-US",
+      "title": "CDO-US",
+      "type": "web-service.endpoint",
+      "base_type": "target",
+      "object_type": "definition_target",
+      "properties": {
+        "disable_certificate_validation": false,
+        "display_name": "CDO-US",
+        "host": "www.defenseorchestrator.com",
+        "ignore_proxy": false,
+        "no_runtime_user": true,
+        "port": 443,
+        "protocol": "https"
+      }
+    },
+    "definition_target_01WVPA5U1WHCU1RvpSlzCCLdk6JtFuChZMn": {
+      "unique_name": "definition_target_01WVPA5U1WHCU1RvpSlzCCLdk6JtFuChZMn",
+      "name": "Mongo Atlas",
+      "title": "Mongo Atlas",
+      "type": "web-service.endpoint",
+      "base_type": "target",
+      "object_type": "definition_target",
+      "properties": {
+        "description": "Mongo Atlas API",
+        "disable_certificate_validation": false,
+        "display_name": "Mongo Atlas",
+        "host": "data.mongodb-api.com",
+        "ignore_proxy": false,
+        "no_runtime_user": true,
+        "port": 443,
+        "protocol": "https"
+      }
+    },
+    "definition_target_01XZC2GELTHJV1c6huZ28GaCtbwAZtOFVgr": {
+      "unique_name": "definition_target_01XZC2GELTHJV1c6huZ28GaCtbwAZtOFVgr",
+      "name": "[CDO]-EMEA",
+      "title": "[CDO]-EMEA",
+      "type": "web-service.endpoint",
+      "base_type": "target",
+      "object_type": "definition_target",
+      "properties": {
+        "disable_certificate_validation": false,
+        "display_name": "[CDO]-EMEA",
+        "host": "defenseorchestrator.eu",
+        "ignore_proxy": false,
+        "no_runtime_user": true,
+        "port": 443,
+        "protocol": "https"
+      }
+    },
+    "definition_target_01XZC30TG5T0Y2aA9ANYlQTz3S0VXcVCKP6": {
+      "unique_name": "definition_target_01XZC30TG5T0Y2aA9ANYlQTz3S0VXcVCKP6",
+      "name": "[CDO]-APJ",
+      "title": "[CDO]-APJ",
+      "type": "web-service.endpoint",
+      "base_type": "target",
+      "object_type": "definition_target",
+      "properties": {
+        "disable_certificate_validation": false,
+        "display_name": "[CDO]-APJ",
+        "host": "www.apj.cdo.cisco.com",
+        "ignore_proxy": false,
+        "no_runtime_user": true,
+        "port": 443,
+        "protocol": "https"
+      }
+    }
+  },
+  "target_groups": {
+    "target_group_01XZC4II9S2SD7elr44NmrQG3WccFKJAVLz": {
+      "unique_name": "target_group_01XZC4II9S2SD7elr44NmrQG3WccFKJAVLz",
+      "name": "CDO-ALL-Regions",
+      "title": "CDO-ALL-Regions",
+      "type": "generic.target_group",
+      "base_type": "target_group",
+      "version": "1.0.0",
+      "targets": [
+        {
+          "data_target_type": "web-service.endpoint",
+          "view_target_type": "web-service.endpoint",
+          "include_all_targets": false,
+          "selected_target_ids": [
+            "definition_target_01W7XBGCJ1F8X2GRKnQLOPutk8mKaaMfM8M",
+            "definition_target_01XZC2GELTHJV1c6huZ28GaCtbwAZtOFVgr",
+            "definition_target_01XZC30TG5T0Y2aA9ANYlQTz3S0VXcVCKP6"
+          ]
+        }
+      ],
+      "object_type": "target_group"
+    }
+  },
+  "atomic_workflows": [
+    "definition_workflow_01WMQXNST0MKE5fJCRuNWTLbaLpRX9Amwn3",
+    "definition_workflow_01WMQ7SDTTOMZ4vVoOdRdPLwbZwlP1Rxxml",
+    "definition_workflow_01WVTLT02J4DF5uIJnqJ4ArKjbAtD1N1mol",
+    "definition_workflow_01WPUL27LCPRS57fcMgpX15qAZ7PsS1PJmg",
+    "definition_workflow_01WU6TSH0Z3HW7QuA9a1HnzJtQIiDcX36f8",
+    "definition_workflow_01WPTY9OL1LPW2mYfTuPKDqYzp0jBr8oMr4",
+    "definition_workflow_01WVP6BRS7ZXZ005X6LCjB5LzAkKJ9kxzbE"
+  ],
+  "webhooks": {
+    "webhook_01WYRBTPRBNO12PFmFr6iNEZDOvWygyzx3g": {
+      "name": "WEBHOOK-CDO-WF001",
+      "title": "WEBHOOK-CDO-WF001",
+      "description": "Run the Workflow CDO-WF001",
+      "type": "generic.webhook",
+      "base_type": "webhook",
+      "object_type": "webhook",
+      "version": "1.0.0",
+      "properties": {
+        "description": "Run the Workflow CDO-WF001",
+        "display_name": "WEBHOOK-CDO-WF001",
+        "request_content_type": "application/json"
+      },
+      "unique_name": "webhook_01WYRBTPRBNO12PFmFr6iNEZDOvWygyzx3g"
+    }
+  },
+  "dependent_workflows": [
+    "definition_workflow_01WU6TSH0Z3HW7QuA9a1HnzJtQIiDcX36f8",
+    "definition_workflow_01WMQXNST0MKE5fJCRuNWTLbaLpRX9Amwn3",
+    "definition_workflow_01WMQ7SDTTOMZ4vVoOdRdPLwbZwlP1Rxxml",
+    "definition_workflow_01WVTLT02J4DF5uIJnqJ4ArKjbAtD1N1mol",
+    "definition_workflow_01WPUL27LCPRS57fcMgpX15qAZ7PsS1PJmg",
+    "definition_workflow_01WPTY9OL1LPW2mYfTuPKDqYzp0jBr8oMr4",
+    "definition_workflow_01WVP6BRS7ZXZ005X6LCjB5LzAkKJ9kxzbE"
+  ]
+}
