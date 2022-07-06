@@ -12,8 +12,6 @@ from termcolor import colored
 
 DEVICES_ENDPOINT = 'services/targets/devices/'
 
-token = input(colored("Enter your access token for CDO: ", 'cyan'))
-
 use_default_url = input(colored("Use default https://defenseorchestrator.com url? [y] ", 'cyan'))
 if use_default_url == "yes" or use_default_url == "y" or use_default_url == "":
   print("Using default url.")
@@ -28,6 +26,9 @@ if use_default_sdc == "yes" or use_default_sdc == "y" or use_default_sdc == "":
 else:
   sdc_index = int(input(colored("Enter the index of the SDC to connect to the device: ", 'cyan')))
 
+print(colored("Reading CDO token...", 'yellow'))
+token = open('assets/token.txt', 'r').read().strip()
+print(colored("Read token!", 'green'))
 
 def cdo_query(url, method, body=None):
     query_url = cdo_url + '/aegis/rest/v1/' + url
@@ -103,7 +104,7 @@ def main():
       reader = csv.reader(f)
       devices_list = list(reader)
 
-    print(colored("Successfully read devices data!", "red"))
+    print(colored("Successfully read devices data!", "green"))
 
     proxy_response = cdo_query('services/targets/proxies', 'GET')
     if not proxy_response:
