@@ -11,13 +11,16 @@ To quickly onboard many IOS devices into a CDO environment.
 ```
 docker load < bulk_ios_onboarding_app.tar
 ``` 
-3. Create a new folder with a file titled `devices.csv` with your device onboarding data (see: Creating Device Info File below). Locate the absolute file path of this new folder.
-4. Run the app using this command:
+3. Create a new folder. This folder will contain two files: `devices.csv` and `token.txt`
+4. Populate `devices.csv` file with your device onboarding data (see: Creating Device Info File below). 
+5. Populate the `token.txt` file with your API token from CDO. API token can be found on the Settings page in CDO.
+6. Run the app using this command:
 ```
 docker run -v <absolute_file_path_to_folder_containing_csv_here>:/bulk_ios_onboarding/assets -it bulk_ios_onboarding_app
 ```
-Be sure to provide the absolute path to the folder containing the csv. For instance if you create a file called `devices.csv` that lives in `~/workspace/cdo/devices.csv`, you will want your argument to look like this `-v ~/workspace/cdo/:/bulk_ios_onboarding/assets`. 
-5. Respond to the prompts and supervise the onboarding progress. 
+Be sure to provide the absolute path to the folder containing the csv and txt files. For instance if you create a file called `devices.csv` that lives in `~/workspace/cdo/devices.csv`, you will want your argument to look like this `-v ~/workspace/cdo:/bulk_ios_onboarding/assets`. 
+7. Respond to the prompts and supervise the onboarding progress. 
+  a) note, when asked to supply the SDC ip address, navigate to the /sdc page in the ui. From there you can see all of your Secure Device Connectors. If you select a Secure Device Selector from this list, you will see the ip address in the right hand sidebar. It is recommended to use the "On-Prem" sdc.
 
 ## Creating Device Info File
 Create a file that has the following format:
