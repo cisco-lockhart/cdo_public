@@ -1,0 +1,19 @@
+namespace: cisco
+name: cdo
+version: 1.0.0
+readme: README.md
+authors:
+  - Aaron Hackney <aahackne@cisco.com>
+description: A collection for automating Cisco Defense Orchestrator
+license:
+  - Apache-2.0
+license_file: 'LICENSE'
+tags: [cdo, cisco, defense, orchestrator, asa, ios, ftd]
+dependencies: {}
+repository: http://example.com/repository
+documentation: http://docs.example.com
+homepage: http://example.com
+issues: http://example.com/issue/tracker
+build_ignore: ['galaxy.yml', '*.pyc', '.git', '.gitignore']
+# manifest: null
+
