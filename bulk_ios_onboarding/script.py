@@ -13,9 +13,8 @@ REGIONS = {
     "APJ": "https://edge.apj.cdo.cisco.com",
     "Australia": "https://edge.aus.cdo.cisco.com",
     "India": "https://edge.in.cdo.cisco.com",
+    # FOR TESTING:    "CI": "https://edge.ci.cdo.cisco.com",
 }
-DEVICES_ENDPOINT = "services/targets/devices/"
-
 
 def cdo_query(cdo_url, token, url, method, body=None):
     query_url = cdo_url + url
@@ -42,17 +41,17 @@ def cdo_query(cdo_url, token, url, method, body=None):
 
 def create_integration_device(cdo_url, token, device, proxy_name):
     name, host, port, username, password = [device[i] for i in range(len(device))]
-    print(colored("Creating device: %s" % name, "yellow"))
+    print(colored(f"Creating device: {name}", "yellow"))
 
-    payload = f"""{
+    payload = f"""{{
         "name": "{name}",
         "deviceAddress": "{host}:{port}",
-        "username": "{username}
+        "username": "{username}",
         "password": "{password}",
         "ignoreCertificate": false,
         "connectorName": "{proxy_name}",
-        "labels": {{}}
-    }"""
+        "labels": {{ }}
+    }}"""
 
     cdo_query(cdo_url, token, "/api/rest/v1/inventory/devices/ios", "POST", payload)
 
