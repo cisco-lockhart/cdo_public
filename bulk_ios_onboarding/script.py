@@ -13,7 +13,6 @@ REGIONS = {
     "APJ": "https://edge.apj.cdo.cisco.com",
     "Australia": "https://edge.aus.cdo.cisco.com",
     "India": "https://edge.in.cdo.cisco.com",
-    # FOR TESTING:    "CI": "https://edge.ci.cdo.cisco.com",
 }
 
 def cdo_query(cdo_url, token, url, method, body=None):
@@ -62,11 +61,11 @@ def main():
         devices_list = list(reader)
 
     print(colored("Successfully read devices data!", "red"))
-
-    token_field = "token"
+    token = input(f"[{colored("?", "yellow")}] Enter your access token for CDO: ")
+    # token_field = "token"
     region_field = "region"
     questions = [
-        inquirer.Password(token_field, message="Enter your access token for CDO"),
+        # inquirer.Password(token_field, message="Enter your access token for CDO"),
         inquirer.List(
             region_field,
             message="What region is your tenant in?",
@@ -77,7 +76,7 @@ def main():
     token_and_region = typing.cast(
         typing.Dict, inquirer.prompt(questions, raise_keyboard_interrupt=True)
     )
-    token = token_and_region[token_field]
+    # token = token_and_region[token_field]
     region = token_and_region[region_field]
     cdo_url = REGIONS[region]
     proxy_response = typing.cast(
