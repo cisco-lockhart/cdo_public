@@ -23,7 +23,7 @@ Be sure to provide the absolute path to the folder containing the csv. For insta
 Create a file that has the following format:
 - each row represents a device
 - each column represents a field: `name`, `host`, `port`, `username`, `password`, `enablePassword` respectively.
-- `enablePassword` field is optional and can be left blank
+- *deprecated*: `enablePassword` field is optional and can be left blank
 - csv file should not include header row of column names
 - all values will be read in as strings. No quotes are required. If a value contains a comma, you may supply double quotes surrounding the value.
 - see `assets/devices.csv.sample` file as a reference example

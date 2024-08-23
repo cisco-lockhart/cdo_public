@@ -1,5 +1,5 @@
 requests
-pybase64
-pycryptodome
 polling
 termcolor
+inquirer
+tqdm
